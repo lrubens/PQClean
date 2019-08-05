@@ -12,7 +12,7 @@
 
 #include "shake.h"
 #include "fips202.h"
-// #include "sp800-185.h"
+#include "sp800-185.h"
 
 /**
  * The hash function as used within Round5.

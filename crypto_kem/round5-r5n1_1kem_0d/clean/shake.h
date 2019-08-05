@@ -22,7 +22,7 @@
 #include <string.h>
 #include "r5_parameter_sets.h"
 #include "fips202.h"
-// #include "sp800-185.h"
+#include "sp800-185.h"
 
 // #define cshake128_inc_init OQS_SHA3_cshake128_inc_init
 // #define cshake256_inc_init OQS_SHA3_cshake256_inc_init
