@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "misc.h": "c"
+        "misc.h": "c",
+        "little_endian.h": "c"
     }
 }

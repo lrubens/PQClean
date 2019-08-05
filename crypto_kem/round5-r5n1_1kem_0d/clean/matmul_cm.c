@@ -8,9 +8,10 @@
 
 #if PARAMS_K !=1 && defined(CM_CACHE)
 
-#include "drbg.h"
+// #include "drbg.h"
 #include "little_endian.h"
 #include "probe_cm.h"
+#include "shake.h"
 
 #include <string.h>
 
@@ -25,8 +26,9 @@ void create_secret_matrix_s_t(int16_t s_t[PARAMS_N_BAR][PARAMS_D], const uint8_t
     uint64_t v[2 * PROBEVEC64];
 
     memset(s_t, 0, PARAMS_N_BAR * PARAMS_D * sizeof (int16_t));
-
-    drbg_init(seed);
+    r5_xof_ctx_t ctx;
+    // drbg_init(seed);
+    r5_xof_input(&ctx, seed, PARAMS_KAPPA_BYTES);
 
     for (l = 0; l < PARAMS_N_BAR; l++) {
         memset(v, 0, sizeof (v));
@@ -35,7 +37,8 @@ void create_secret_matrix_s_t(int16_t s_t[PARAMS_N_BAR][PARAMS_D], const uint8_t
                 do {
                     if (y == &base[PARAMS_H]) {
                         y = base;
-                        drbg(base, sizeof (base));
+                        // drbg(base, sizeof (base));
+                        r5_xof_squeeze(&ctx, &base, sizeof(base));
                     }
                     x = *y++;
                 } while (x >= PARAMS_RS_LIM);
@@ -45,7 +48,8 @@ void create_secret_matrix_s_t(int16_t s_t[PARAMS_N_BAR][PARAMS_D], const uint8_t
                 do {
                     if (y == &base[PARAMS_H]) {
                         y = base;
-                        drbg(base, sizeof (base));
+                        // drbg(base, sizeof (base));
+                        r5_xof_squeeze(&ctx, &base, sizeof(base));
                     }
                     x = *y++;
                 } while (x >= PARAMS_RS_LIM);
@@ -70,8 +74,8 @@ void create_secret_matrix_r_t(int16_t r_t[PARAMS_M_BAR][PARAMS_D], const uint8_t
     uint64_t v[2 * PROBEVEC64];
 
     memset(r_t, 0, PARAMS_M_BAR * PARAMS_D * sizeof (int16_t));
-
-    drbg_init(seed);
+    r5_xof_ctx_t ctx;
+    r5_xof_input(&ctx, seed, PARAMS_KAPPA_BYTES);
 
     for (l = 0; l < PARAMS_M_BAR; l++) {
         memset(v, 0, sizeof (v));
@@ -80,7 +84,8 @@ void create_secret_matrix_r_t(int16_t r_t[PARAMS_M_BAR][PARAMS_D], const uint8_t
                 do {
                     if (y == &base[PARAMS_H]) {
                         y = base;
-                        drbg(base, sizeof (base));
+                        // drbg(base, sizeof (base));
+                        r5_xof_squeeze(&ctx, &base, sizeof(base));
                     }
                     x = *y++;
                 } while (x >= PARAMS_RS_LIM);
@@ -90,7 +95,8 @@ void create_secret_matrix_r_t(int16_t r_t[PARAMS_M_BAR][PARAMS_D], const uint8_t
                 do {
                     if (y == &base[PARAMS_H]) {
                         y = base;
-                        drbg(base, sizeof (base));
+                        // drbg(base, sizeof (base));
+                        r5_xof_squeeze(&ctx, &base, sizeof(base));
                     }
                     x = *y++;
                 } while (x >= PARAMS_RS_LIM);

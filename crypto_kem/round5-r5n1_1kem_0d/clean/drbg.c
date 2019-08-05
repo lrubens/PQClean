@@ -143,9 +143,9 @@ int drbg_sampler16_2_once_customization(uint16_t *x, const size_t xlen, const vo
     #else
 
     if (PARAMS_KAPPA_BYTES > 16) {
-        cshake256((uint8_t *) x, xlen * sizeof (uint16_t), NULL, 0, (const uint8_t *) customization, customization_len, (const uint8_t *) seed, PARAMS_KAPPA_BYTES);
+        cshake256((uint8_t *) x, xlen * sizeof (uint16_t), (const uint8_t *) seed, PARAMS_KAPPA_BYTES, (const uint8_t *) customization, customization_len);
     } else {
-        cshake128((uint8_t *) x, xlen * sizeof (uint16_t), NULL, 0, (const uint8_t *) customization, customization_len, (const uint8_t *) seed, PARAMS_KAPPA_BYTES);
+        cshake128((uint8_t *) x, xlen * sizeof (uint16_t), (const uint8_t *) seed, PARAMS_KAPPA_BYTES, (const uint8_t *) customization, customization_len);
     }
 
     #endif

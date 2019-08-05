@@ -10,13 +10,9 @@
 #ifndef R5_HASH_H
 #define R5_HASH_H
 
-// #include "shake.h"
+#include "shake.h"
 #include "fips202.h"
-#include "sp800-185.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+// #include "sp800-185.h"
 
 /**
  * The hash function as used within Round5.
@@ -29,12 +25,11 @@ extern "C" {
  *                         the implementation of the hash function)
  */
 inline void hash(uint8_t *output, const size_t output_len, const uint8_t *input, const size_t input_len, const uint8_t kappa_bytes) {
+    uint8_t dummy = 0;
+    dummy = kappa_bytes;
+    dummy = dummy * 2;      // trying to avoid warning
     /* Since without customization, SHAKE == CSHAKE, we can use SHAKE here directly. */
-    if (kappa_bytes > 16) {
-        shake256(output, output_len, input, input_len);
-    } else {
-        shake128(output, output_len, input, input_len);
-    }
+    r5_xof(output, output_len, input, input_len);
 }
 
 /**
@@ -57,8 +52,5 @@ inline void hash_customization(uint8_t *output, const size_t output_len, const u
         cshake128(output, output_len, NULL, 0, customization, customization_len, input, input_len);
     }
 }
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* R5_HASH_H */

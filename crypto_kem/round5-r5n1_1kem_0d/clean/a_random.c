@@ -11,12 +11,13 @@
 
 #include "misc.h"
 #include "little_endian.h"
-#include "drbg.h"
+#include "shake.h"
+// #include "drbg.h"
 
 void create_A_random(modq_t *A_random, const unsigned char *seed) {
     #if PARAMS_TAU == 2
-    drbg_sampler16_2_once(A_random, PARAMS_TAU2_LEN, seed);
+    r5_xof(A_random, PARAMS_TAU2_LEN * sizeof(uint16_t), seed, PARAMS_KAPPA_BYTES);
     #else
-    drbg_sampler16_2_once(A_random, PARAMS_D * PARAMS_K, seed);
+    r5_xof(A_random, PARAMS_D * PARAMS_K * sizeof(uint16_t), seed, PARAMS_KAPPA_BYTES);
     #endif
 }

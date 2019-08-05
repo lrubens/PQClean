@@ -13,9 +13,7 @@
 #include "r5_parameter_sets.h"
 #include "misc.h"
 #include "little_endian.h"
-// #include "shake.h"
-#include "fips202.h"
-#include "sp800-185.h"
+#include "shake.h"
 #include "r5_hash.h"
 
 #include <stdint.h>
@@ -70,8 +68,8 @@ typedef struct {
 typedef struct drbg_ctx {
 
     union {
-        shake128incctx shake; /**< Context in case of a SHAKE generator */
-        shake128incctx cshake; /**< Context in case of a cSHAKE generator */
+        r5_xof_ctx_t shake; /**< Context in case of a SHAKE generator */
+        r5_xof_ctx_t cshake; /**< Context in case of a cSHAKE generator */
     } generator_ctx; /**< The generator context */
     uint8_t output[SHAKE128_RATE > SHAKE256_RATE ? SHAKE128_RATE : SHAKE256_RATE]; /**< Buffer for output. */
     size_t index; /**< Current index in buffer. */
@@ -116,14 +114,15 @@ typedef struct drbg_ctx {
 #if PARAMS_KAPPA_BYTES > 16
 #define drbg_init(seed) \
     drbg_ctx ctx; \
+    shake256_init(&ctx.generator_ctx.shake); \
     shake256_absorb(&ctx.generator_ctx.shake, seed, PARAMS_KAPPA_BYTES); \
     ctx.index = SHAKE256_RATE
 
 #else
 #define drbg_init(seed) \
     drbg_ctx ctx; \
-    shake128_inc_init(&ctx.generator_ctx.shake); \
-    shake128_inc_absorb(&ctx.generator_ctx.shake, seed, PARAMS_KAPPA_BYTES); \
+    shake128_init(&ctx.generator_ctx.shake); \
+    shake128_absorb(&ctx.generator_ctx.shake, seed, PARAMS_KAPPA_BYTES); \
     ctx.index = SHAKE128_RATE
 
 #endif
@@ -174,8 +173,8 @@ typedef struct drbg_ctx {
 #else
 #define drbg_init_customization(seed, customization, customization_len) \
     drbg_ctx ctx; \
-    cshake128_inc_init(&ctx.generator_ctx.cshake, NULL, 0, customization, customization_len); \
-    cshake128_inc_absorb(&ctx.generator_ctx.cshake, seed, PARAMS_KAPPA_BYTES); \
+    cshake128_init(&ctx.generator_ctx.cshake, customization, customization_len); \
+    cshake128_absorb(&ctx.generator_ctx.cshake, seed, PARAMS_KAPPA_BYTES); \
     ctx.index = SHAKE128_RATE
 
 #endif
@@ -212,7 +211,7 @@ typedef struct drbg_ctx {
         i = ctx.index; \
         for (j = 0; j < xlen; j++) { \
             if (i >= SHAKE256_RATE) { \
-                shake256_squeezeblocks(ctx.output, 1, &ctx.generator_ctx.shake); \
+                shake256_squeezeblocks(&ctx.generator_ctx.shake, ctx.output, 1); \
                 i = 0; \
             } \
             ((uint8_t *) x)[j] = ctx.output[i++]; \
@@ -225,7 +224,7 @@ typedef struct drbg_ctx {
         i = ctx.index; \
         for (j = 0; j < xlen; j++) { \
             if (i >= SHAKE128_RATE) { \
-                shake128_inc_squeeze(ctx.output, 1, &ctx.generator_ctx.shake); \
+                shake128_squeezeblocks(&ctx.generator_ctx.shake, ctx.output, 1); \
                 i = 0; \
             } \
             ((uint8_t *) x)[j] = ctx.output[i++]; \
@@ -277,7 +276,7 @@ typedef struct drbg_ctx {
         i = ctx.index; \
         for (j = 0; j < xlen; j++) { \
             if (i >= SHAKE256_RATE) { \
-                cshake128_inc_squeeze(ctx.output, 1, &ctx.generator_ctx.cshake); \
+                cshake256_squeezeblocks(&ctx.generator_ctx.cshake, ctx.output, 1); \
                 i = 0; \
             } \
             ((uint8_t *) x)[j] = ctx.output[i++]; \
@@ -290,7 +289,7 @@ typedef struct drbg_ctx {
         i = ctx.index; \
         for (j = 0; j < xlen; j++) { \
             if (i >= SHAKE128_RATE) { \
-                cshake128_inc_squeeze(ctx.output, 1, &ctx.generator_ctx.cshake); \
+                cshake128_squeezeblocks(&ctx.generator_ctx.cshake, ctx.output, 1); \
                 i = 0; \
             } \
             ((uint8_t *) x)[j] = ctx.output[i++]; \

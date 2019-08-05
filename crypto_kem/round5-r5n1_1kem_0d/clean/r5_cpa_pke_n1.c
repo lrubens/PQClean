@@ -76,12 +76,14 @@ static int create_A_permutation(uint16_t A_permutation[PARAMS_D], const unsigned
     uint16_t rnd;
     uint32_t i;
     uint8_t v[PARAMS_TAU2_LEN] = {0};
+    r5_xof_ctx_t ctx;
 
-    drbg_init_customization(sigma, permutation_customization, sizeof (permutation_customization));
+    // drbg_init_customization(sigma, permutation_customization, sizeof (permutation_customization));
+    r5_xof_s_input(&ctx, sigma, PARAMS_KAPPA_BYTES, permutation_customization, sizeof(permutation_customization));
 
     for (i = 0; i < PARAMS_D; ++i) {
         do {
-            drbg16_customization(rnd);
+            r5_xof_squeeze(&ctx, &rnd, sizeof(rnd));
             rnd = (uint16_t) (rnd & (PARAMS_TAU2_LEN - 1));
         } while (v[rnd]);
         v[rnd] = 1;
