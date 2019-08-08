@@ -17,10 +17,10 @@
 modq_t A_fixed[PARAMS_D * 2 * PARAMS_K];
 #endif
 
-int create_A_fixed(const unsigned char *seed) {
+int PQCLEAN_ROUND5R5N1_1KEM_0D_create_A_fixed(const unsigned char *seed) {
     #if PARAMS_TAU == 1
     /* Create A_fixed randomly */
-    create_A_random(A_fixed, seed);
+    PQCLEAN_ROUND5R5N1_1KEM_0D_create_A_random(A_fixed, seed);
 
     /* Duplicate rows */
     for (int i = PARAMS_K - 1; i >= 0; --i) {

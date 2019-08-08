@@ -188,7 +188,7 @@ randombytes_init(unsigned char *entropy_input,
 }
 
 int
-randombytes(unsigned char *x, unsigned long long xlen) {
+PQCLEAN_ROUND5R5N1_1KEM_0D_randombytes(unsigned char *x, unsigned long long xlen) {
     unsigned char block[16];
     int i = 0;
 

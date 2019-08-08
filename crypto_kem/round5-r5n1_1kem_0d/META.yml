@@ -1,6 +1,6 @@
 name: Round5-R5N1_1KEM_0d
 type: kem
-claimed-nist-level: 5
+claimed-nist-level: 1
 claimed-security: IND-CPA
 length-public-key: 5214
 length-ciphertext: 5236

@@ -12,8 +12,8 @@
 
 #if CRYPTO_CIPHERTEXTBYTES == 0
 
-extern int crypto_encrypt_keypair(unsigned char *pk, unsigned char *sk);
-extern int crypto_encrypt(unsigned char *ct, unsigned long long *ct_len, const unsigned char *m, const unsigned long long m_len, const unsigned char *pk);
-extern int crypto_encrypt_open(unsigned char *m, unsigned long long *m_len, const unsigned char *ct, const unsigned long long ct_len, const unsigned char *sk);
+extern int PQCLEAN_ROUND5R5N1_1KEM_0D_crypto_encrypt_keypair(unsigned char *pk, unsigned char *sk);
+extern int PQCLEAN_ROUND5R5N1_1KEM_0D_crypto_encrypt(unsigned char *ct, unsigned long long *ct_len, const unsigned char *m, const unsigned long long m_len, const unsigned char *pk);
+extern int PQCLEAN_ROUND5R5N1_1KEM_0D_crypto_encrypt_open(unsigned char *m, unsigned long long *m_len, const unsigned char *ct, const unsigned long long ct_len, const unsigned char *sk);
 
 #endif

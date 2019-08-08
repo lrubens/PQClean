@@ -1,0 +1,14 @@
+name: Round5-{{ CRYPTO_ALGNAME }}
+type: kem
+claimed-nist-level: {{ NIST_LEVEL }}
+claimed-security: IND-CPA
+length-public-key: {{ PUBLICKEY_BYTES }}
+length-ciphertext: {{ CIPHERTEXT_BYTES }}
+length-secret-key: {{ SECRETKEY_BYTES }}
+length-shared-secret: {{ CRYPTO_BYTES }}
+# nistkat-sha256: 937d9b2e139112e13d4093a6afe715deff476e4d578208b9e8e1809de43835cd
+principal-submitters:
+  - Oscar Garcia-Morchon
+implementations:
+    - name: clean
+      version: https://github.com/round5/code/commit/5e9002a5289659a3991321a27a4879c6e11d6fe7

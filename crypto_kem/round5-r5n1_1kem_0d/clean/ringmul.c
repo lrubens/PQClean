@@ -10,25 +10,27 @@
 
 #if PARAMS_K == 1 && !defined(CM_CACHE)
 
-#include "drbg.h"
+#include "shake.h"
 #include "little_endian.h"
 
 #include <string.h>
 
 // create a sparse ternary vector from a seed
 
-void create_secret_vector(uint16_t idx[PARAMS_H / 2][2], const uint8_t *seed) {
+void PQCLEAN_ROUND5R5N1_1KEM_0D_create_secret_vector(uint16_t idx[PARAMS_H / 2][2], const uint8_t *seed) {
     size_t i;
     uint16_t x;
     uint8_t v[PARAMS_ND];
+    r5_xof_ctx_t ctx;
 
     memset(v, 0, sizeof (v));
-    drbg_init(seed);
+
+    PQCLEAN_ROUND5R5N1_1KEM_0D_r5_xof_input(&ctx, seed, PARAMS_KAPPA_BYTES);
 
     for (i = 0; i < PARAMS_H; i++) {
         do {
             do {
-                drbg16(x);
+                PQCLEAN_ROUND5R5N1_1KEM_0D_r5_xof_squeeze(&ctx, &x, sizeof(x));
             } while (x >= PARAMS_RS_LIM);
             x /= PARAMS_RS_DIV;
         } while (v[x]);
@@ -39,7 +41,7 @@ void create_secret_vector(uint16_t idx[PARAMS_H / 2][2], const uint8_t *seed) {
 
 // multiplication mod q, result length n
 
-void ringmul_q(modq_t d[PARAMS_ND], modq_t a[PARAMS_ND], uint16_t idx[PARAMS_H / 2][2]) {
+void PQCLEAN_ROUND5R5N1_1KEM_0D_ringmul_q(modq_t d[PARAMS_ND], modq_t a[PARAMS_ND], uint16_t idx[PARAMS_H / 2][2]) {
     size_t i, j;
     modq_t *p_add, *p_sub;
     modq_t p[2 * (PARAMS_ND + 1)];
@@ -77,7 +79,7 @@ void ringmul_q(modq_t d[PARAMS_ND], modq_t a[PARAMS_ND], uint16_t idx[PARAMS_H /
 
 // multiplication mod p, result length mu
 
-void ringmul_p(modp_t d[PARAMS_MU], modp_t a[PARAMS_ND], uint16_t idx[PARAMS_H / 2][2]) {
+void PQCLEAN_ROUND5R5N1_1KEM_0D_ringmul_p(modp_t d[PARAMS_MU], modp_t a[PARAMS_ND], uint16_t idx[PARAMS_H / 2][2]) {
     size_t i, j;
     modp_t *p_add, *p_sub;
     modp_t p[(PARAMS_MU + 2) + (PARAMS_ND + 1)];
