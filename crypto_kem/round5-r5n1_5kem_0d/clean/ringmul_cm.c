@@ -33,7 +33,11 @@ void PQCLEAN_ROUND5R5N1_5KEM_0D_create_secret_vector(uint16_t idx[PARAMS_H / 2][
                 PQCLEAN_ROUND5R5N1_5KEM_0D_r5_xof_squeeze(&ctx, &x, sizeof(x));
             } while (x >= PARAMS_RS_LIM);
             x /= PARAMS_RS_DIV;
+<<<<<<< HEAD
         } while (PQCLEAN_ROUND5R5N1_5KEM_0D_probe_cm(v, x));
+=======
+        } while (probe_cm(v, x));
+>>>>>>> e7113e585f7cfa33420468e7f9aa4e47a5515304
         idx[i >> 1][i & 1] = x; // addition / subtract index
     }
 }

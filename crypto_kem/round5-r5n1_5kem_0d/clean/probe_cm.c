@@ -20,7 +20,11 @@
  * @param flag flag to indicate the shift amount can be >= 32
  * @return 1 << shift_amount
  */
+<<<<<<< HEAD
 #define PQCLEAN_ROUND5R5N1_5KEM_0D_constant_time_shift_1_left64(out, shift_amount, flag) do { \
+=======
+#define constant_time_shift_1_left64(out, shift_amount, flag) do { \
+>>>>>>> e7113e585f7cfa33420468e7f9aa4e47a5515304
         uint64_t tmp; \
         out = 1llu; \
         tmp = (uint64_t) (-((shift_amount) & 1)); \
@@ -49,7 +53,11 @@
  * @param flag flag to indicate the shift amount can be >= 32 (ignored)
  * @return 1 << shift_amount
  */
+<<<<<<< HEAD
 #define PQCLEAN_ROUND5R5N1_5KEM_0D_constant_time_shift_1_left64(out, shift_amount, flag) out = (1llu << (shift_amount))
+=======
+#define constant_time_shift_1_left64(out, shift_amount, flag) out = (1llu << (shift_amount))
+>>>>>>> e7113e585f7cfa33420468e7f9aa4e47a5515304
 
 #endif
 
@@ -58,14 +66,23 @@
 // Cache-resistant "occupancy probe". Tests and "occupies" a single slot at x.
 // Return value zero (false) indicates the slot was originally empty.
 
+<<<<<<< HEAD
 int PQCLEAN_ROUND5R5N1_5KEM_0D_probe_cm_odd(uint64_t *vplus, const uint16_t x) {
+=======
+int probe_cm_odd(uint64_t *vplus, const uint16_t x) {
+>>>>>>> e7113e585f7cfa33420468e7f9aa4e47a5515304
     int i;
     uint64_t a, b, c, y, z;
     uint64_t *vminus = vplus + PROBEVEC64;
 
     // construct the selector
+<<<<<<< HEAD
     PQCLEAN_ROUND5R5N1_5KEM_0D_constant_time_shift_1_left64(y, x & 0x3F, 1); // low bits of index
     PQCLEAN_ROUND5R5N1_5KEM_0D_constant_time_shift_1_left64(z, x >> 6, 0); // high bits of index
+=======
+    constant_time_shift_1_left64(y, x & 0x3F, 1); // low bits of index
+    constant_time_shift_1_left64(z, x >> 6, 0); // high bits of index
+>>>>>>> e7113e585f7cfa33420468e7f9aa4e47a5515304
 
     c = 0;
     for (i = 0; i < PROBEVEC64; i++) { // always scan through all
@@ -80,14 +97,23 @@ int PQCLEAN_ROUND5R5N1_5KEM_0D_probe_cm_odd(uint64_t *vplus, const uint16_t x) {
     return c == 0; // return true if was occupied before
 }
 
+<<<<<<< HEAD
 int PQCLEAN_ROUND5R5N1_5KEM_0D_probe_cm_even(uint64_t *vplus, const uint16_t x) {
+=======
+int probe_cm_even(uint64_t *vplus, const uint16_t x) {
+>>>>>>> e7113e585f7cfa33420468e7f9aa4e47a5515304
     int i;
     uint64_t a, b, c, y, z;
     uint64_t *vminus = vplus + PROBEVEC64;
 
     // construct the selector
+<<<<<<< HEAD
     PQCLEAN_ROUND5R5N1_5KEM_0D_constant_time_shift_1_left64(y, x & 0x3F, 1); // low bits of index
     PQCLEAN_ROUND5R5N1_5KEM_0D_constant_time_shift_1_left64(z, x >> 6, 0); // high bits of index
+=======
+    constant_time_shift_1_left64(y, x & 0x3F, 1); // low bits of index
+    constant_time_shift_1_left64(z, x >> 6, 0); // high bits of index
+>>>>>>> e7113e585f7cfa33420468e7f9aa4e47a5515304
 
     c = 0;
     for (i = 0; i < PROBEVEC64; i++) { // always scan through all
@@ -107,13 +133,22 @@ int PQCLEAN_ROUND5R5N1_5KEM_0D_probe_cm_even(uint64_t *vplus, const uint16_t x) 
 // Cache-resistant "occupancy probe". Tests and "occupies" a single slot at x.
 // Return value zero (false) indicates the slot was originally empty.
 
+<<<<<<< HEAD
 int PQCLEAN_ROUND5R5N1_5KEM_0D_probe_cm(uint64_t *v, const uint16_t x) {
+=======
+int probe_cm(uint64_t *v, const uint16_t x) {
+>>>>>>> e7113e585f7cfa33420468e7f9aa4e47a5515304
     int i;
     uint64_t a, b, c, y, z;
 
     // construct the selector
+<<<<<<< HEAD
     PQCLEAN_ROUND5R5N1_5KEM_0D_constant_time_shift_1_left64(y, x & 0x3F, 1); // low bits of index
     PQCLEAN_ROUND5R5N1_5KEM_0D_constant_time_shift_1_left64(z, x >> 6, 0); // high bits of index
+=======
+    constant_time_shift_1_left64(y, x & 0x3F, 1); // low bits of index
+    constant_time_shift_1_left64(z, x >> 6, 0); // high bits of index
+>>>>>>> e7113e585f7cfa33420468e7f9aa4e47a5515304
 
     c = 0;
     for (i = 0; i < PROBEVEC64; i++) { // always scan through all

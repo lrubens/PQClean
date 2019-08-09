@@ -20,10 +20,17 @@
 void PQCLEAN_ROUND5R5ND_3KEM_5D_create_secret_matrix_s_t(int16_t s_t[PARAMS_N_BAR][PARAMS_D], const uint8_t *seed) {
     uint64_t i;
     uint16_t h, l;
+<<<<<<< HEAD
     uint16_t x = 0;
     uint16_t base[PARAMS_H];
     uint16_t *y = &(base[PARAMS_H]);
     uint64_t v[2 * PROBEVEC64] = {0};
+=======
+    uint16_t x;
+    uint16_t base[PARAMS_H];
+    uint16_t *y = &(base[PARAMS_H]);
+    uint64_t v[2 * PROBEVEC64];
+>>>>>>> e7113e585f7cfa33420468e7f9aa4e47a5515304
 
     memset(s_t, 0, PARAMS_N_BAR * PARAMS_D * sizeof (int16_t));
     r5_xof_ctx_t ctx;
@@ -44,7 +51,11 @@ void PQCLEAN_ROUND5R5ND_3KEM_5D_create_secret_matrix_s_t(int16_t s_t[PARAMS_N_BA
                     x = *y++;
                 } while (x >= PARAMS_RS_LIM);
                 x /= PARAMS_RS_DIV;
+<<<<<<< HEAD
             } while (PQCLEAN_ROUND5R5ND_3KEM_5D_probe_cm_even(v, x));
+=======
+            } while (probe_cm_even(v, x));
+>>>>>>> e7113e585f7cfa33420468e7f9aa4e47a5515304
             do {
                 do {
                     if (y == &base[PARAMS_H]) {
@@ -55,7 +66,11 @@ void PQCLEAN_ROUND5R5ND_3KEM_5D_create_secret_matrix_s_t(int16_t s_t[PARAMS_N_BA
                     x = *y++;
                 } while (x >= PARAMS_RS_LIM);
                 x /= PARAMS_RS_DIV;
+<<<<<<< HEAD
             } while (PQCLEAN_ROUND5R5ND_3KEM_5D_probe_cm_odd(v, x));
+=======
+            } while (probe_cm_odd(v, x));
+>>>>>>> e7113e585f7cfa33420468e7f9aa4e47a5515304
         }
 
         for (i = 0; i < PARAMS_D; i++) {
@@ -91,7 +106,11 @@ void PQCLEAN_ROUND5R5ND_3KEM_5D_create_secret_matrix_r_t(int16_t r_t[PARAMS_M_BA
                     x = *y++;
                 } while (x >= PARAMS_RS_LIM);
                 x /= PARAMS_RS_DIV;
+<<<<<<< HEAD
             } while (PQCLEAN_ROUND5R5ND_3KEM_5D_probe_cm_even(v, x));
+=======
+            } while (probe_cm_even(v, x));
+>>>>>>> e7113e585f7cfa33420468e7f9aa4e47a5515304
             do {
                 do {
                     if (y == &base[PARAMS_H]) {
@@ -102,7 +121,11 @@ void PQCLEAN_ROUND5R5ND_3KEM_5D_create_secret_matrix_r_t(int16_t r_t[PARAMS_M_BA
                     x = *y++;
                 } while (x >= PARAMS_RS_LIM);
                 x /= PARAMS_RS_DIV;
+<<<<<<< HEAD
             } while (PQCLEAN_ROUND5R5ND_3KEM_5D_probe_cm_odd(v, x));
+=======
+            } while (probe_cm_odd(v, x));
+>>>>>>> e7113e585f7cfa33420468e7f9aa4e47a5515304
         }
         for (i = 0; i < PARAMS_D; i++) {
             r_t[l][i] = (int16_t) (((v[i >> 6] >> (i & 0x3F)) & 1) - ((v[PROBEVEC64 + (i >> 6)] >> (i & 0x3F)) & 1)); // this is constant time since it goes through all values and always perform same operation.

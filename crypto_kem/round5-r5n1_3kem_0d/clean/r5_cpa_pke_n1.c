@@ -76,7 +76,11 @@ static int PQCLEAN_ROUND5R5N1_3KEM_0D_create_A_permutation(uint32_t A_permutatio
 
 static int PQCLEAN_ROUND5R5N1_3KEM_0D_create_A_permutation(uint16_t A_permutation[PARAMS_D], const unsigned char *sigma) {
     /* Compute the permutation */
+<<<<<<< HEAD
     uint16_t rnd = 0;
+=======
+    uint16_t rnd;
+>>>>>>> e7113e585f7cfa33420468e7f9aa4e47a5515304
     uint32_t i;
     uint8_t v[PARAMS_TAU2_LEN] = {0};
     r5_xof_ctx_t ctx;
