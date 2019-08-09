@@ -9,7 +9,8 @@
 #if PARAMS_K == 1
 
 #include "r5_hash.h"
-#include "rng.h"
+// #include "rng.h"
+#include "randombytes.h"
 #include "xef.h"
 #include "ringmul.h"
 #include "misc.h"
@@ -43,7 +44,7 @@
 
 // compress ND elements of q bits into p bits and pack into a byte string
 
-static void pack_q_p(uint8_t *pv, const modq_t *vq, const modq_t rounding_constant) {
+static void PQCLEAN_ROUND5R5N1_1KEM_0D_pack_q_p(uint8_t *pv, const modq_t *vq, const modq_t rounding_constant) {
     #if (PARAMS_P_BITS == 8)
     size_t i;
 
@@ -69,7 +70,7 @@ static void pack_q_p(uint8_t *pv, const modq_t *vq, const modq_t rounding_consta
 
 // unpack a byte string into ND elements of p bits
 
-static void unpack_p(modp_t *vp, const uint8_t *pv) {
+static void PQCLEAN_ROUND5R5N1_1KEM_0D_unpack_p(modp_t *vp, const uint8_t *pv) {
     #if (PARAMS_P_BITS == 8)
     memcpy(vp, pv, PARAMS_ND);
     #else
@@ -90,7 +91,7 @@ static void unpack_p(modp_t *vp, const uint8_t *pv) {
 
 // generate a keypair (sigma, B)
 
-int r5_cpa_pke_keygen(uint8_t *pk, uint8_t *sk) {
+int PQCLEAN_ROUND5R5N1_1KEM_0D_r5_cpa_pke_keygen(uint8_t *pk, uint8_t *sk) {
     modq_t A[PARAMS_ND];
     modq_t B[PARAMS_ND];
     uint16_t S_idx[PARAMS_H / 2][2];
@@ -102,20 +103,20 @@ int r5_cpa_pke_keygen(uint8_t *pk, uint8_t *sk) {
     #endif
 
     // A from sigma
-    create_A_random(A, pk);
+    PQCLEAN_ROUND5R5N1_1KEM_0D_create_A_random(A, pk);
 
     randombytes(sk, PARAMS_KAPPA_BYTES); // secret key -- Random S
-    create_secret_vector(S_idx, sk);
+    PQCLEAN_ROUND5R5N1_1KEM_0D_create_secret_vector(S_idx, sk);
 
-    ringmul_q(B, A, S_idx); // B = A * S
+    PQCLEAN_ROUND5R5N1_1KEM_0D_ringmul_q(B, A, S_idx); // B = A * S
 
     // Compress B q_bits -> p_bits, pk = sigma | B
-    pack_q_p(pk + PARAMS_KAPPA_BYTES, B, PARAMS_H1);
+    PQCLEAN_ROUND5R5N1_1KEM_0D_pack_q_p(pk + PARAMS_KAPPA_BYTES, B, PARAMS_H1);
 
     return 0;
 }
 
-int r5_cpa_pke_encrypt(uint8_t *ct, const uint8_t *pk, const uint8_t *m, const uint8_t *rho) {
+int PQCLEAN_ROUND5R5N1_1KEM_0D_r5_cpa_pke_encrypt(uint8_t *ct, const uint8_t *pk, const uint8_t *m, const uint8_t *rho) {
     size_t i, j;
     modq_t A[PARAMS_ND];
     uint16_t R_idx[PARAMS_H / 2][2];
@@ -126,10 +127,10 @@ int r5_cpa_pke_encrypt(uint8_t *ct, const uint8_t *pk, const uint8_t *m, const u
     modp_t t, tm;
 
     // unpack public key
-    unpack_p(B, pk + PARAMS_KAPPA_BYTES);
+    PQCLEAN_ROUND5R5N1_1KEM_0D_unpack_p(B, pk + PARAMS_KAPPA_BYTES);
 
     // A from sigma
-    create_A_random(A, pk);
+    PQCLEAN_ROUND5R5N1_1KEM_0D_create_A_random(A, pk);
 
     memcpy(m1, m, PARAMS_KAPPA_BYTES); // add error correction code
     memset(m1 + PARAMS_KAPPA_BYTES, 0, BITS_TO_BYTES(PARAMS_MU * PARAMS_B_BITS) - PARAMS_KAPPA_BYTES);
@@ -138,10 +139,10 @@ int r5_cpa_pke_encrypt(uint8_t *ct, const uint8_t *pk, const uint8_t *m, const u
     #endif
 
     // Create R
-    create_secret_vector(R_idx, rho);
+    PQCLEAN_ROUND5R5N1_1KEM_0D_create_secret_vector(R_idx, rho);
 
-    ringmul_q(U_T, A, R_idx); // U^T == U = A^T * R == A * R (mod q)
-    ringmul_p(X, B, R_idx); // X = B^T * R == B * R (mod p)
+    PQCLEAN_ROUND5R5N1_1KEM_0D_ringmul_q(U_T, A, R_idx); // U^T == U = A^T * R == A * R (mod q)
+    PQCLEAN_ROUND5R5N1_1KEM_0D_ringmul_p(X, B, R_idx); // X = B^T * R == B * R (mod p)
 
     #ifdef NIST_KAT_GENERATION
     print_hex("r5_cpa_pke_encrypt: rho", rho, PARAMS_KAPPA_BYTES, 1);
@@ -149,7 +150,7 @@ int r5_cpa_pke_encrypt(uint8_t *ct, const uint8_t *pk, const uint8_t *m, const u
     print_hex("r5_cpa_pke_encrypt: m1", m1, BITS_TO_BYTES(PARAMS_MU * PARAMS_B_BITS), 1);
     #endif
 
-    pack_q_p(ct, U_T, PARAMS_H2); // ct = U^T | v
+    PQCLEAN_ROUND5R5N1_1KEM_0D_pack_q_p(ct, U_T, PARAMS_H2); // ct = U^T | v
 
     memset(ct + PARAMS_NDP_SIZE, 0, PARAMS_MUT_SIZE);
     j = 8 * PARAMS_NDP_SIZE;
@@ -177,7 +178,7 @@ int r5_cpa_pke_encrypt(uint8_t *ct, const uint8_t *pk, const uint8_t *m, const u
     return 0;
 }
 
-int r5_cpa_pke_decrypt(uint8_t *m, const uint8_t *sk, const uint8_t *ct) {
+int PQCLEAN_ROUND5R5N1_1KEM_0D_r5_cpa_pke_decrypt(uint8_t *m, const uint8_t *sk, const uint8_t *ct) {
     size_t i, j;
     uint16_t S_idx[PARAMS_H / 2][2];
     modp_t U_T[PARAMS_ND];
@@ -185,9 +186,9 @@ int r5_cpa_pke_decrypt(uint8_t *m, const uint8_t *sk, const uint8_t *ct) {
     modp_t t, X_prime[PARAMS_MU];
     uint8_t m1[BITS_TO_BYTES(PARAMS_MU * PARAMS_B_BITS)];
 
-    create_secret_vector(S_idx, sk);
+    PQCLEAN_ROUND5R5N1_1KEM_0D_create_secret_vector(S_idx, sk);
 
-    unpack_p(U_T, ct); // ct = U^T | v
+    PQCLEAN_ROUND5R5N1_1KEM_0D_unpack_p(U_T, ct); // ct = U^T | v
 
     j = 8 * PARAMS_NDP_SIZE;
     for (i = 0; i < PARAMS_MU; i++) {
@@ -200,7 +201,7 @@ int r5_cpa_pke_decrypt(uint8_t *m, const uint8_t *sk, const uint8_t *ct) {
     }
 
 
-    ringmul_p(X_prime, U_T, S_idx); // X' = S^T * U == U^T * S (mod p)
+    PQCLEAN_ROUND5R5N1_1KEM_0D_ringmul_p(X_prime, U_T, S_idx); // X' = S^T * U == U^T * S (mod p)
 
 
     // X' = v - X', compressed to 1 bit

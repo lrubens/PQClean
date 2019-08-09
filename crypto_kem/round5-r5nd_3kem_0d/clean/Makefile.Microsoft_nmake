@@ -1,0 +1,19 @@
+# This Makefile can be used with Microsoft Visual Studio's nmake using the command:
+#    nmake /f Makefile.Microsoft_nmake
+
+LIBRARY=libround5-r5nd_3kem_0d_clean.lib
+OBJECTS=a_fixed.obj a_random.obj cca_encrypt.obj cpa_kem.obj drbg.obj kem.obj little_endian.obj matmul.obj matmul_avx2.obj matmul_cm.obj misc.obj nist_rng.obj probe_cm.obj r5_cca_kem.obj r5_cca_pke.obj r5_cpa_kem.obj r5_cpa_pke_n1.obj r5_cpa_pke_nd.obj r5_dem.obj r5_hash.obj r5_memory.obj ringmul.obj ringmul_cm.obj shake.obj xe2_c16.obj xe4_c64.obj xe5_c64.obj xef_ref.obj
+
+CFLAGS=/nologo /I ..\..\..\common /W4 /WX
+
+all: $(LIBRARY)
+
+# Make sure objects are recompiled if headers change.
+$(OBJECTS): *.h
+
+$(LIBRARY): $(OBJECTS)
+    LIB.EXE /NOLOGO /WX /OUT:$@ $**
+
+clean:
+    -DEL $(OBJECTS)
+    -DEL $(LIBRARY)

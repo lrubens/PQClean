@@ -1,0 +1,14 @@
+name: Round5-R5ND_3KEM_5d
+type: kem
+claimed-nist-level: 3
+claimed-security: IND-CPA
+length-public-key: 780
+length-ciphertext: 859
+length-secret-key: 24
+length-shared-secret: 24
+# nistkat-sha256: 937d9b2e139112e13d4093a6afe715deff476e4d578208b9e8e1809de43835cd
+principal-submitters:
+  - Oscar Garcia-Morchon
+implementations:
+    - name: clean
+      version: https://github.com/round5/code/commit/5e9002a5289659a3991321a27a4879c6e11d6fe7

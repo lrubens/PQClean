@@ -24,11 +24,11 @@
  * Public functions
  ******************************************************************************/
 
-int r5_cca_pke_keygen(unsigned char *pk, unsigned char *sk) {
-    return r5_cca_kem_keygen(pk, sk);
+int PQCLEAN_ROUND5R5N1_1KEM_0D_r5_cca_pke_keygen(unsigned char *pk, unsigned char *sk) {
+    return PQCLEAN_ROUND5R5N1_1KEM_0D_r5_cca_kem_keygen(pk, sk);
 }
 
-int r5_cca_pke_encrypt(unsigned char *ct, unsigned long long *ct_len, const unsigned char *m, const unsigned long long m_len, const unsigned char *pk) {
+int PQCLEAN_ROUND5R5N1_1KEM_0D_r5_cca_pke_encrypt(unsigned char *ct, unsigned long long *ct_len, const unsigned char *m, const unsigned long long m_len, const unsigned char *pk) {
     int result = -1;
     const unsigned long long c1_len = PARAMS_CT_SIZE + PARAMS_KAPPA_BYTES;
     unsigned char c1[PARAMS_CT_SIZE + PARAMS_KAPPA_BYTES];
@@ -36,14 +36,14 @@ int r5_cca_pke_encrypt(unsigned char *ct, unsigned long long *ct_len, const unsi
     unsigned char k[PARAMS_KAPPA_BYTES];
 
     /* Determine c1 and k */
-    r5_cca_kem_encapsulate(c1, k, pk);
+    PQCLEAN_ROUND5R5N1_1KEM_0D_r5_cca_kem_encapsulate(c1, k, pk);
 
     /* Copy c1 into first part of ct */
     memcpy(ct, c1, c1_len);
     *ct_len = c1_len;
 
     /* Apply DEM to get second part of ct */
-    if (round5_dem(ct + c1_len, &c2_len, k, m, m_len)) {
+    if (PQCLEAN_ROUND5R5N1_1KEM_0D_round5_dem(ct + c1_len, &c2_len, k, m, m_len)) {
         goto done_encrypt;
     }
     *ct_len += c2_len;
@@ -56,7 +56,7 @@ done_encrypt:
     return result;
 }
 
-int r5_cca_pke_decrypt(unsigned char *m, unsigned long long *m_len, const unsigned char *ct, unsigned long long ct_len, const unsigned char *sk) {
+int PQCLEAN_ROUND5R5N1_1KEM_0D_r5_cca_pke_decrypt(unsigned char *m, unsigned long long *m_len, const unsigned char *ct, unsigned long long ct_len, const unsigned char *sk) {
     int result = -1;
     unsigned char k[PARAMS_KAPPA_BYTES];
     const unsigned char *const c1 = ct;
@@ -70,10 +70,10 @@ int r5_cca_pke_decrypt(unsigned char *m, unsigned long long *m_len, const unsign
     }
 
     /* Determine k */
-    r5_cca_kem_decapsulate(k, c1, sk);
+    PQCLEAN_ROUND5R5N1_1KEM_0D_r5_cca_kem_decapsulate(k, c1, sk);
 
     /* Apply DEM-inverse to get m */
-    if (round5_dem_inverse(m, m_len, k, c2, c2_len)) {
+    if (PQCLEAN_ROUND5R5N1_1KEM_0D_round5_dem_inverse(m, m_len, k, c2, c2_len)) {
         goto done_decrypt;
     }
 

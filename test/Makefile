@@ -1,8 +1,9 @@
-# This Makefile can be used with GNU Make or BSD Make
+#
+#This Makefile can be used with GNU Make or BSD Make
 
 # override as desired
 TYPE=kem
-SCHEME=round5-r5n1_1kem_0d
+SCHEME=round5-r5n1_5kem_0d
 IMPLEMENTATION=clean
 
 SCHEME_DIR="../crypto_$(TYPE)/$(SCHEME)/$(IMPLEMENTATION)"
@@ -16,7 +17,7 @@ COMMON_HEADERS=$(COMMON_DIR)/*.h
 DEST_DIR=../bin
 
 # This -Wall was supported by the European Commission through the ERC Starting Grant 805031 (EPOQUE)
-CFLAGS=-O3 -Wall -Wextra -Wpedantic -Wvla -Werror -std=c99 \
+CFLAGS=-O3 -lssl -lcrypto -Wall -Wextra -ggdb3 -Wpedantic -Wvla -Werror -std=c99 \
 	   -Wundef -Wshadow -Wcast-align -Wpointer-arith -Wmissing-prototypes\
 	   -fstrict-aliasing -fno-common -pipe \
 	   -I$(COMMON_DIR) $(EXTRAFLAGS)

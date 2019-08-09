@@ -30,7 +30,7 @@ extern "C" {
  * @param[in] seed the seed to use to generate the fixed A matrix (KAPPA_BYTES bytes)
  * @return __0__ in case of success
  */
-int create_A_fixed(const unsigned char *seed);
+int PQCLEAN_ROUND5R5N1_1KEM_0D_create_A_fixed(const unsigned char *seed);
 
 #ifdef __cplusplus
 }

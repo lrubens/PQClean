@@ -1,0 +1,60 @@
+round5:
+  - 
+    schemes:
+      - 
+        scheme: "r5n1_1kem_0d"
+        nist_level: 1
+        crypto_bytes: 16
+        publickey_bytes: 5214
+        secretkey_bytes: 16
+        ciphertext_bytes: 5236
+      - 
+        scheme: "r5n1_3kem_0d"
+        nist_level: 3
+        crypto_bytes: 24
+        publickey_bytes: 8834
+        secretkey_bytes: 24
+        ciphertext_bytes: 8866
+      - 
+        scheme: "r5n1_5kem_0d"
+        nist_level: 5
+        crypto_bytes: 32
+        publickey_bytes: 14264
+        secretkey_bytes: 32
+        ciphertext_bytes: 14288
+      - 
+        scheme: "r5nd_1kem_0d"
+        nist_level: 1
+        crypto_bytes: 16
+        publickey_bytes: 634
+        secretkey_bytes: 16
+        ciphertext_bytes: 682
+      - 
+        scheme: "r5nd_3kem_0d"
+        nist_level: 3
+        crypto_bytes: 24
+        publickey_bytes: 909
+        secretkey_bytes: 24
+        ciphertext_bytes: 981
+      - 
+        scheme: "r5nd_3kem_5d"
+        nist_level: 3
+        crypto_bytes: 24
+        publickey_bytes: 780
+        secretkey_bytes: 24
+        ciphertext_bytes: 859
+      - 
+        scheme: "r5nd_5kem_0d"
+        nist_level: 5
+        crypto_bytes: 32
+        publickey_bytes: 1178
+        secretkey_bytes: 32
+        ciphertext_bytes: 1274
+      - 
+        scheme: "r5nd_5kem_5d"
+        nist_level: 5
+        crypto_bytes: 32
+        publickey_bytes: 972
+        secretkey_bytes: 32
+        ciphertext_bytes: 1063
+  - 

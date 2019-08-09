@@ -31,7 +31,7 @@ void randombytes_init(unsigned char *entropy_input, unsigned char *personalizati
  * @param[in] xlen the number of random bytes
  * @return _0_ in case of success, non-zero otherwise
  */
-int randombytes(unsigned char *x, unsigned long long xlen);
+int PQCLEAN_ROUND5R5N1_1KEM_0D_randombytes(unsigned char *x, unsigned long long xlen);
 
 #ifdef __cplusplus
 }

@@ -14,10 +14,10 @@
 #include "shake.h"
 // #include "drbg.h"
 
-void create_A_random(modq_t *A_random, const unsigned char *seed) {
+void PQCLEAN_ROUND5R5N1_1KEM_0D_create_A_random(modq_t *A_random, const unsigned char *seed) {
     #if PARAMS_TAU == 2
-    r5_xof(A_random, PARAMS_TAU2_LEN * sizeof(uint16_t), seed, PARAMS_KAPPA_BYTES);
+    PQCLEAN_ROUND5R5N1_1KEM_0D_r5_xof(A_random, PARAMS_TAU2_LEN * sizeof(uint16_t), seed, PARAMS_KAPPA_BYTES);
     #else
-    r5_xof(A_random, PARAMS_D * PARAMS_K * sizeof(uint16_t), seed, PARAMS_KAPPA_BYTES);
+    PQCLEAN_ROUND5R5N1_1KEM_0D_r5_xof(A_random, PARAMS_D * PARAMS_K * sizeof(uint16_t), seed, PARAMS_KAPPA_BYTES);
     #endif
 }

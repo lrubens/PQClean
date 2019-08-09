@@ -21,7 +21,7 @@ extern "C" {
  * @param[out] sk     secret key
  * @return __0__ in case of success
  */
-int r5_cpa_kem_keygen(unsigned char *pk, unsigned char *sk);
+int PQCLEAN_ROUND5R5N1_1KEM_0D_r5_cpa_kem_keygen(unsigned char *pk, unsigned char *sk);
 
 /**
  * CPA KEM encapsulate. Uses the parameters as specified.
@@ -30,7 +30,7 @@ int r5_cpa_kem_keygen(unsigned char *pk, unsigned char *sk);
  * @param[out] k      shared secret
  * @return __0__ in case of success
  */
-int r5_cpa_kem_encapsulate(unsigned char *ct, unsigned char *k, const unsigned char *pk);
+int PQCLEAN_ROUND5R5N1_1KEM_0D_r5_cpa_kem_encapsulate(unsigned char *ct, unsigned char *k, const unsigned char *pk);
 
 /**
  * CPA KEM de-capsulate. Uses the parameters as specified.
@@ -40,7 +40,7 @@ int r5_cpa_kem_encapsulate(unsigned char *ct, unsigned char *k, const unsigned c
  * @param[in]  sk     secret key with which the message is to be de-capsulated
  * @return __0__ in case of success
  */
-int r5_cpa_kem_decapsulate(unsigned char *k, const unsigned char *ct, const unsigned char *sk);
+int PQCLEAN_ROUND5R5N1_1KEM_0D_r5_cpa_kem_decapsulate(unsigned char *k, const unsigned char *ct, const unsigned char *sk);
 
 #ifdef __cplusplus
 }
