@@ -12,7 +12,7 @@
 
 // register lengths
 
-const unsigned xef_reg[5][3][10] = {
+const unsigned PQCLEAN_ROUND5R5ND_3KEM_0D_CLEAN_xef_reg[5][3][10] = {
     {
         { 11, 13 }, // XE1-24
         { 13, 15 }, // XE1-28
@@ -90,7 +90,7 @@ size_t PQCLEAN_ROUND5R5ND_3KEM_0D_CLEAN_xef_compute(void *block, size_t len, uns
 
         // cyclic polynomial case
         for (; j < 2 * f; j++) {
-            r[j] ^= x << (bit % xef_reg[f - 1][pl][j]);
+            r[j] ^= x << (bit % PQCLEAN_ROUND5R5ND_3KEM_0D_CLEAN_xef_reg[f - 1][pl][j]);
 
         }
         bit += 8;
@@ -100,7 +100,7 @@ size_t PQCLEAN_ROUND5R5ND_3KEM_0D_CLEAN_xef_compute(void *block, size_t len, uns
 
     for (i = 0; i < 2 * f; i++) {
 
-        l = xef_reg[f - 1][pl][i];      // len
+        l = PQCLEAN_ROUND5R5ND_3KEM_0D_CLEAN_xef_reg[f - 1][pl][i];      // len
         x = r[i];
         x ^= x >> l;
 
@@ -144,7 +144,7 @@ size_t PQCLEAN_ROUND5R5ND_3KEM_0D_CLEAN_xef_fixerr(void *block, size_t len, unsi
     memset(r, 0, sizeof(r));
     bit = len << 3;
     for (i = 0; i < 2 * f; i++) {
-        l = xef_reg[f - 1][pl][i];      // len
+        l = PQCLEAN_ROUND5R5ND_3KEM_0D_CLEAN_xef_reg[f - 1][pl][i];      // len
         for (j = 0; j < l; j++) {
             r[i] ^= ((uint64_t) ((v[bit >> 3] >> (bit & 7)) & 1)) << j;
             bit++;
@@ -168,7 +168,7 @@ size_t PQCLEAN_ROUND5R5ND_3KEM_0D_CLEAN_xef_fixerr(void *block, size_t len, unsi
             }
         }
         for (; j < 2 * f; j++) {
-            th += (unsigned) (r[j] >> (i %  xef_reg[f - 1][pl][j])) & 1;
+            th += (unsigned) (r[j] >> (i %  PQCLEAN_ROUND5R5ND_3KEM_0D_CLEAN_xef_reg[f - 1][pl][j])) & 1;
         }
         // if th > f
         v[i >> 3] = (uint8_t) (v[i >> 3] ^ ((th >> 3) << (i & 7)));
