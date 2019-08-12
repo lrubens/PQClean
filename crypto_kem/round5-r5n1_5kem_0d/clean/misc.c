@@ -11,7 +11,7 @@
 
 #include <stdio.h>
 
-void print_hex(const char *var, const unsigned char *data, const size_t nr_elements, const size_t element_size) {
+void PQCLEAN_ROUND5R5N1_5KEM_0D_CLEAN_print_hex(const char *var, const unsigned char *data, const size_t nr_elements, const size_t element_size) {
     size_t i, ii;
     if (var != NULL) {
         printf("%s[%zu]=", var, nr_elements);
@@ -29,7 +29,7 @@ void print_hex(const char *var, const unsigned char *data, const size_t nr_eleme
     }
 }
 
-void print_sage_u_vector(const char *var, const uint16_t *vector, const size_t nr_elements) {
+void PQCLEAN_ROUND5R5N1_5KEM_0D_CLEAN_print_sage_u_vector(const char *var, const uint16_t *vector, const size_t nr_elements) {
     size_t i;
     if (var != NULL) {
         printf("%s[%zu]=", var, nr_elements);
@@ -47,7 +47,7 @@ void print_sage_u_vector(const char *var, const uint16_t *vector, const size_t n
     }
 }
 
-void print_sage_u_matrix(const char *var, const uint16_t *matrix, const size_t nr_rows, const size_t nr_columns) {
+void PQCLEAN_ROUND5R5N1_5KEM_0D_CLEAN_print_sage_u_matrix(const char *var, const uint16_t *matrix, const size_t nr_rows, const size_t nr_columns) {
     size_t i;
     if (var != NULL) {
         printf("%s[%zu][%zu]=", var, nr_rows, nr_columns);
@@ -62,7 +62,7 @@ void print_sage_u_matrix(const char *var, const uint16_t *matrix, const size_t n
         } else {
             printf(" ");
         }
-        print_sage_u_vector(NULL, matrix + i * nr_columns, nr_columns);
+        PQCLEAN_ROUND5R5N1_5KEM_0D_CLEAN_print_sage_u_vector(NULL, matrix + i * nr_columns, nr_columns);
     }
     if (nr_rows > 1) {
         printf("\n])");
@@ -74,12 +74,12 @@ void print_sage_u_matrix(const char *var, const uint16_t *matrix, const size_t n
     }
 }
 
-void print_sage_u_vector_matrix(const char *var, const uint16_t *matrix, const size_t nr_rows, const size_t nr_columns, const size_t nr_elements) {
+void PQCLEAN_ROUND5R5N1_5KEM_0D_CLEAN_print_sage_u_vector_matrix(const char *var, const uint16_t *matrix, const size_t nr_rows, const size_t nr_columns, const size_t nr_elements) {
     size_t i, j;
     if (nr_elements == 1) {
-        print_sage_u_matrix(var, matrix, nr_rows, nr_columns);
+        PQCLEAN_ROUND5R5N1_5KEM_0D_CLEAN_print_sage_u_matrix(var, matrix, nr_rows, nr_columns);
     } else if (nr_rows == 1 && nr_columns == 1) {
-        print_sage_u_vector(var, matrix, nr_elements);
+        PQCLEAN_ROUND5R5N1_5KEM_0D_CLEAN_print_sage_u_vector(var, matrix, nr_elements);
     } else {
         if (var != NULL) {
             printf("%s[%zu][%zu][%zu]=", var, nr_rows, nr_columns, nr_elements);
@@ -103,7 +103,7 @@ void print_sage_u_vector_matrix(const char *var, const uint16_t *matrix, const s
                 } else {
                     printf(" ");
                 }
-                print_sage_u_vector(NULL, matrix + (i * nr_columns + j) * nr_elements, nr_elements);
+                PQCLEAN_ROUND5R5N1_5KEM_0D_CLEAN_print_sage_u_vector(NULL, matrix + (i * nr_columns + j) * nr_elements, nr_elements);
             }
             if (nr_columns > 1 && nr_elements > 1) {
                 printf("\n]");
@@ -122,7 +122,7 @@ void print_sage_u_vector_matrix(const char *var, const uint16_t *matrix, const s
     }
 }
 
-void print_sage_s_vector(const char *var, const int16_t *poly, const size_t nr_elements) {
+void PQCLEAN_ROUND5R5N1_5KEM_0D_CLEAN_print_sage_s_vector(const char *var, const int16_t *poly, const size_t nr_elements) {
     size_t i;
     if (var != NULL) {
         printf("%s[%zu]=", var, nr_elements);
@@ -140,7 +140,7 @@ void print_sage_s_vector(const char *var, const int16_t *poly, const size_t nr_e
     }
 }
 
-void print_sage_s_matrix(const char *var, const int16_t *matrix, const size_t nr_rows, const size_t nr_columns) {
+void PQCLEAN_ROUND5R5N1_5KEM_0D_CLEAN_print_sage_s_matrix(const char *var, const int16_t *matrix, const size_t nr_rows, const size_t nr_columns) {
     size_t i;
     if (var != NULL) {
         printf("%s[%zu][%zu]=", var, nr_rows, nr_columns);
@@ -155,7 +155,7 @@ void print_sage_s_matrix(const char *var, const int16_t *matrix, const size_t nr
         } else {
             printf(" ");
         }
-        print_sage_s_vector(NULL, matrix + i * nr_columns, nr_columns);
+        PQCLEAN_ROUND5R5N1_5KEM_0D_CLEAN_print_sage_s_vector(NULL, matrix + i * nr_columns, nr_columns);
     }
     if (nr_rows > 1) {
         printf("\n])");
@@ -167,12 +167,12 @@ void print_sage_s_matrix(const char *var, const int16_t *matrix, const size_t nr
     }
 }
 
-void print_sage_s_vector_matrix(const char *var, const int16_t *matrix, const size_t nr_rows, const size_t nr_columns, const size_t nr_elements) {
+void PQCLEAN_ROUND5R5N1_5KEM_0D_CLEAN_print_sage_s_vector_matrix(const char *var, const int16_t *matrix, const size_t nr_rows, const size_t nr_columns, const size_t nr_elements) {
     size_t i, j;
     if (nr_elements == 1) {
-        print_sage_s_matrix(var, matrix, nr_rows, nr_columns);
+        PQCLEAN_ROUND5R5N1_5KEM_0D_CLEAN_print_sage_s_matrix(var, matrix, nr_rows, nr_columns);
     } else if (nr_rows == 1 && nr_columns == 1) {
-        print_sage_s_vector(var, matrix, nr_elements);
+        PQCLEAN_ROUND5R5N1_5KEM_0D_CLEAN_print_sage_s_vector(var, matrix, nr_elements);
     } else {
         if (var != NULL) {
             printf("%s[%zu][%zu][%zu]=", var, nr_rows, nr_columns, nr_elements);
@@ -196,7 +196,7 @@ void print_sage_s_vector_matrix(const char *var, const int16_t *matrix, const si
                 } else {
                     printf(" ");
                 }
-                print_sage_s_vector(NULL, matrix + (i * nr_columns + j) * nr_elements, nr_elements);
+                PQCLEAN_ROUND5R5N1_5KEM_0D_CLEAN_print_sage_s_vector(NULL, matrix + (i * nr_columns + j) * nr_elements, nr_elements);
             }
             if (nr_columns > 1 && nr_elements > 1) {
                 printf("\n]");
@@ -215,7 +215,7 @@ void print_sage_s_vector_matrix(const char *var, const int16_t *matrix, const si
     }
 }
 
-uint32_t ceil_log2(uint32_t x) {
+uint32_t PQCLEAN_ROUND5R5N1_5KEM_0D_CLEAN_ceil_log2(uint32_t x) {
     uint32_t bits = 0;
     uint32_t ones = 0;
 

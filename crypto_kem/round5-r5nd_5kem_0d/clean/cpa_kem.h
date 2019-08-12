@@ -24,9 +24,9 @@
 extern "C" {
 #endif
 
-int PQCLEAN_ROUND5R5ND_5KEM_0D_crypto_kem_keypair(unsigned char *pk, unsigned char *sk);
-int PQCLEAN_ROUND5R5ND_5KEM_0D_crypto_kem_enc(unsigned char *ct, unsigned char *k, const unsigned char *pk);
-int PQCLEAN_ROUND5R5ND_5KEM_0D_crypto_kem_dec(unsigned char *k, const unsigned char *ct, const unsigned char *sk);
+int PQCLEAN_ROUND5R5ND_5KEM_0D_CLEAN_keypair(unsigned char *pk, unsigned char *sk);
+int PQCLEAN_ROUND5R5ND_5KEM_0D_CLEAN_encaps(unsigned char *ct, unsigned char *k, const unsigned char *pk);
+int PQCLEAN_ROUND5R5ND_5KEM_0D_CLEAN_decaps(unsigned char *k, const unsigned char *ct, const unsigned char *sk);
 
 #ifdef __cplusplus
 }

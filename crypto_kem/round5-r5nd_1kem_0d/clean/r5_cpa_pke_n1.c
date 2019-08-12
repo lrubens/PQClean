@@ -36,8 +36,8 @@
 #else
 #define XEF(function, block, len, f) xef_##function(block, len, f)
 #endif
-#define xef_compute(block, len, f) XEF(compute, block, len, f)
-#define xef_fixerr(block, len, f) XEF(fixerr, block, len, f)
+#define PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_xef_compute(block, len, f) XEF(compute, block, len, f)
+#define PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_xef_fixerr(block, len, f) XEF(fixerr, block, len, f)
 
 #endif
 
@@ -55,15 +55,15 @@ static const uint8_t permutation_customization[2] = {0, 1};
 
 #include "a_fixed.h"
 
-static int PQCLEAN_ROUND5R5ND_1KEM_0D_create_A_permutation(uint32_t A_permutation[PARAMS_D], const unsigned char *sigma) {
+static int PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_create_A_permutation(uint32_t A_permutation[PARAMS_D], const unsigned char *sigma) {
     /* Compute the permutation */
     uint16_t rnd;
     r5_xof_ctx_t ctx;
-    PQCLEAN_ROUND5R5ND_1KEM_0D_r5_xof_s_input(&ctx, sigma, PARAMS_KAPPA_BYTES, permutation_customization, sizeof(permutation_customization));
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_r5_xof_s_input(&ctx, sigma, PARAMS_KAPPA_BYTES, permutation_customization, sizeof(permutation_customization));
 
     for (uint32_t i = 0; i < PARAMS_D; ++i) {
         do {
-            PQCLEAN_ROUND5R5ND_1KEM_0D_r5_xof_squeeze(&ctx, &rnd, sizeof(rnd));
+            PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_r5_xof_squeeze(&ctx, &rnd, sizeof(rnd));
         } while (rnd >= PARAMS_RS_LIM);
         rnd = (uint16_t) (rnd / PARAMS_RS_DIV);
         A_permutation[i] = 2 * i * PARAMS_D + rnd;
@@ -74,23 +74,19 @@ static int PQCLEAN_ROUND5R5ND_1KEM_0D_create_A_permutation(uint32_t A_permutatio
 
 #elif PARAMS_TAU == 2
 
-static int PQCLEAN_ROUND5R5ND_1KEM_0D_create_A_permutation(uint16_t A_permutation[PARAMS_D], const unsigned char *sigma) {
+static int PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_create_A_permutation(uint16_t A_permutation[PARAMS_D], const unsigned char *sigma) {
     /* Compute the permutation */
-<<<<<<< HEAD
     uint16_t rnd = 0;
-=======
-    uint16_t rnd;
->>>>>>> e7113e585f7cfa33420468e7f9aa4e47a5515304
     uint32_t i;
     uint8_t v[PARAMS_TAU2_LEN] = {0};
     r5_xof_ctx_t ctx;
 
     // drbg_init_customization(sigma, permutation_customization, sizeof (permutation_customization));
-    PQCLEAN_ROUND5R5ND_1KEM_0D_r5_xof_s_input(&ctx, sigma, PARAMS_KAPPA_BYTES, permutation_customization, sizeof(permutation_customization));
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_r5_xof_s_input(&ctx, sigma, PARAMS_KAPPA_BYTES, permutation_customization, sizeof(permutation_customization));
 
     for (i = 0; i < PARAMS_D; ++i) {
         do {
-            PQCLEAN_ROUND5R5ND_1KEM_0D_r5_xof_squeeze(&ctx, &rnd, sizeof(rnd));
+            PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_r5_xof_squeeze(&ctx, &rnd, sizeof(rnd));
             rnd = (uint16_t) (rnd & (PARAMS_TAU2_LEN - 1));
         } while (v[rnd]);
         v[rnd] = 1;
@@ -104,7 +100,7 @@ static int PQCLEAN_ROUND5R5ND_1KEM_0D_create_A_permutation(uint16_t A_permutatio
 
 // compress D*M_BAR elements of q bits into p bits and pack into a byte string
 
-static void PQCLEAN_ROUND5R5ND_1KEM_0D_pack_q_p_m_bar(uint8_t *pv, const modq_t *vq, const modq_t rounding_constant) {
+static void PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_pack_q_p_m_bar(uint8_t *pv, const modq_t *vq, const modq_t rounding_constant) {
     #if (PARAMS_P_BITS == 8)
     size_t i;
 
@@ -134,7 +130,7 @@ static void PQCLEAN_ROUND5R5ND_1KEM_0D_pack_q_p_m_bar(uint8_t *pv, const modq_t 
 
 // compress D*N_BAR elements of q bits into p bits and pack into a byte string
 
-static void PQCLEAN_ROUND5R5ND_1KEM_0D_pack_q_p_n_bar(uint8_t *pv, const modq_t *vq, const modq_t rounding_constant) {
+static void PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_pack_q_p_n_bar(uint8_t *pv, const modq_t *vq, const modq_t rounding_constant) {
     #if (PARAMS_P_BITS == 8)
     size_t i;
 
@@ -164,7 +160,7 @@ static void PQCLEAN_ROUND5R5ND_1KEM_0D_pack_q_p_n_bar(uint8_t *pv, const modq_t 
 
 // unpack a byte string into D*M_BAR elements of p bits
 
-static void PQCLEAN_ROUND5R5ND_1KEM_0D_unpack_p_m_bar(modp_t *vp, const uint8_t *pv) {
+static void PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_unpack_p_m_bar(modp_t *vp, const uint8_t *pv) {
     #if (PARAMS_P_BITS == 8)
     memcpy(vp, pv, PARAMS_D * PARAMS_M_BAR);
     #else
@@ -192,7 +188,7 @@ static void PQCLEAN_ROUND5R5ND_1KEM_0D_unpack_p_m_bar(modp_t *vp, const uint8_t 
 
 // unpack a byte string into D*N_BAR elements of p bits
 
-static void PQCLEAN_ROUND5R5ND_1KEM_0D_unpack_p_n_bar(modp_t *vp, const uint8_t *pv) {
+static void PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_unpack_p_n_bar(modp_t *vp, const uint8_t *pv) {
     #if (PARAMS_P_BITS == 8)
     memcpy(vp, pv, PARAMS_D * PARAMS_N_BAR);
     #else
@@ -220,7 +216,7 @@ static void PQCLEAN_ROUND5R5ND_1KEM_0D_unpack_p_n_bar(modp_t *vp, const uint8_t 
 
 // generate a keypair (sigma, B)
 
-int PQCLEAN_ROUND5R5ND_1KEM_0D_r5_cpa_pke_keygen(uint8_t *pk, uint8_t *sk) {
+int PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_r5_cpa_pke_keygen(uint8_t *pk, uint8_t *sk) {
     modq_t B[PARAMS_D][PARAMS_N_BAR];
     #ifdef CM_CACHE
     int16_t S_T[PARAMS_N_BAR][PARAMS_D];
@@ -231,49 +227,49 @@ int PQCLEAN_ROUND5R5ND_1KEM_0D_r5_cpa_pke_keygen(uint8_t *pk, uint8_t *sk) {
     randombytes(pk, PARAMS_KAPPA_BYTES); // sigma = seed of (permutation of) A
     #ifdef NIST_KAT_GENERATION
     printf("r5_cpa_pke_keygen: tau=%u\n", PARAMS_TAU);
-    print_hex("r5_cpa_pke_keygen: sigma", pk, PARAMS_KAPPA_BYTES, 1);
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_print_hex("r5_cpa_pke_keygen: sigma", pk, PARAMS_KAPPA_BYTES, 1);
     #endif
 
 
     #if PARAMS_TAU == 0
     modq_t A_random[PARAMS_D][PARAMS_D];
     // A from sigma
-    PQCLEAN_ROUND5R5ND_1KEM_0D_create_A_random((modq_t *) A_random, pk);
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_create_A_random((modq_t *) A_random, pk);
 #define A_matrix A_random
 #define A_element(r,c) A_random[r][c]
     #elif PARAMS_TAU == 1
     uint32_t A_permutation[PARAMS_D];
     // Permutation of A_fixed
-    PQCLEAN_ROUND5R5ND_1KEM_0D_create_A_permutation(A_permutation, pk);
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_create_A_permutation(A_permutation, pk);
 #define A_matrix A_fixed
 #define A_element(r,c) A_fixed[A_permutation[r] + (uint32_t) c]
     #elif PARAMS_TAU == 2
     modq_t A_random[PARAMS_TAU2_LEN + PARAMS_D];
     // A from sigma
-    PQCLEAN_ROUND5R5ND_1KEM_0D_create_A_random(A_random, pk);
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_create_A_random(A_random, pk);
     memcpy(A_random + PARAMS_TAU2_LEN, A_random, PARAMS_D * sizeof (modq_t));
     uint16_t A_permutation[PARAMS_D];
     // Permutation of A_random
-    PQCLEAN_ROUND5R5ND_1KEM_0D_create_A_permutation(A_permutation, pk);
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_create_A_permutation(A_permutation, pk);
 #define A_matrix A_random
 #define A_element(r,c) A_random[A_permutation[r] + (uint32_t) c]
     #endif
 
     randombytes(sk, PARAMS_KAPPA_BYTES); // secret key -- Random S
-    PQCLEAN_ROUND5R5ND_1KEM_0D_create_secret_matrix_s_t(S_T, sk);
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_create_secret_matrix_s_t(S_T, sk);
     #if PARAMS_TAU == 0
-    PQCLEAN_ROUND5R5ND_1KEM_0D_matmul_as_q(B, A_matrix, S_T); // B = A * S
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_matmul_as_q(B, A_matrix, S_T); // B = A * S
     #else
-    PQCLEAN_ROUND5R5ND_1KEM_0D_matmul_as_q(B, A_matrix, A_permutation, S_T); // B = A * S
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_matmul_as_q(B, A_matrix, A_permutation, S_T); // B = A * S
     #endif
 
 
     // Compress B q_bits -> p_bits, pk = sigma | B
-    PQCLEAN_ROUND5R5ND_1KEM_0D_pack_q_p_n_bar(pk + PARAMS_KAPPA_BYTES, &B[0][0], PARAMS_H1);
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_pack_q_p_n_bar(pk + PARAMS_KAPPA_BYTES, &B[0][0], PARAMS_H1);
     return 0;
 }
 
-int PQCLEAN_ROUND5R5ND_1KEM_0D_r5_cpa_pke_encrypt(uint8_t *ct, const uint8_t *pk, const uint8_t *m, const uint8_t *rho) {
+int PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_r5_cpa_pke_encrypt(uint8_t *ct, const uint8_t *pk, const uint8_t *m, const uint8_t *rho) {
     size_t i, j;
     #ifdef CM_CACHE
     int16_t R_T[PARAMS_M_BAR][PARAMS_D];
@@ -287,30 +283,30 @@ int PQCLEAN_ROUND5R5ND_1KEM_0D_r5_cpa_pke_encrypt(uint8_t *ct, const uint8_t *pk
     modp_t t, tm;
 
     // unpack public key
-    PQCLEAN_ROUND5R5ND_1KEM_0D_unpack_p_n_bar(&B[0][0], pk + PARAMS_KAPPA_BYTES);
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_unpack_p_n_bar(&B[0][0], pk + PARAMS_KAPPA_BYTES);
 
 #undef A_matrix
 #undef A_element
     #if PARAMS_TAU == 0
     modq_t A_random[PARAMS_D][PARAMS_K];
     // A from sigma
-    PQCLEAN_ROUND5R5ND_1KEM_0D_create_A_random((modq_t *) A_random, pk);
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_create_A_random((modq_t *) A_random, pk);
 #define A_matrix A_random
 #define A_element(r,c) A_random[r][c]
     #elif PARAMS_TAU == 1
     uint32_t A_permutation[PARAMS_D];
     // Permutation of A_fixed
-    PQCLEAN_ROUND5R5ND_1KEM_0D_create_A_permutation(A_permutation, pk);
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_create_A_permutation(A_permutation, pk);
 #define A_matrix A_fixed
 #define A_element(r,c) A_fixed[A_permutation[r] + (uint32_t) c]
     #elif PARAMS_TAU == 2
     modq_t A_random[PARAMS_TAU2_LEN + PARAMS_D];
     // A from sigma
-    PQCLEAN_ROUND5R5ND_1KEM_0D_create_A_random(A_random, pk);
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_create_A_random(A_random, pk);
     memcpy(A_random + PARAMS_TAU2_LEN, A_random, PARAMS_D * sizeof (modq_t));
     uint16_t A_permutation[PARAMS_D];
     // Permutation of A_random
-    PQCLEAN_ROUND5R5ND_1KEM_0D_create_A_permutation(A_permutation, pk);
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_create_A_permutation(A_permutation, pk);
 #define A_matrix A_random
 #define A_element(r,c) A_random[A_permutation[r] + (uint32_t) c]
     #endif
@@ -318,26 +314,26 @@ int PQCLEAN_ROUND5R5ND_1KEM_0D_r5_cpa_pke_encrypt(uint8_t *ct, const uint8_t *pk
     memcpy(m1, m, PARAMS_KAPPA_BYTES);
     memset(m1 + PARAMS_KAPPA_BYTES, 0, BITS_TO_BYTES(PARAMS_MU * PARAMS_B_BITS) - PARAMS_KAPPA_BYTES);
     #if (PARAMS_XE != 0)
-    xef_compute(m1, PARAMS_KAPPA_BYTES, PARAMS_F);
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_xef_compute(m1, PARAMS_KAPPA_BYTES, PARAMS_F);
     #endif
 
     // Create R
-    PQCLEAN_ROUND5R5ND_1KEM_0D_create_secret_matrix_r_t(R_T, rho);
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_create_secret_matrix_r_t(R_T, rho);
 
     #if PARAMS_TAU == 0
-    PQCLEAN_ROUND5R5ND_1KEM_0D_matmul_rta_q(U_T, A_matrix, R_T); // U^T = (R^T x A)^T   (mod q)
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_matmul_rta_q(U_T, A_matrix, R_T); // U^T = (R^T x A)^T   (mod q)
     #else
-    PQCLEAN_ROUND5R5ND_1KEM_0D_matmul_rta_q(U_T, A_matrix, A_permutation, R_T); // U^T = (R^T x A)^T   (mod q)
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_matmul_rta_q(U_T, A_matrix, A_permutation, R_T); // U^T = (R^T x A)^T   (mod q)
     #endif
-    PQCLEAN_ROUND5R5ND_1KEM_0D_matmul_btr_p(X, B, R_T); // X = R^T x B   (mod p)
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_matmul_btr_p(X, B, R_T); // X = R^T x B   (mod p)
 
     #ifdef NIST_KAT_GENERATION
-    print_hex("r5_cpa_pke_encrypt: rho", rho, PARAMS_KAPPA_BYTES, 1);
-    print_hex("r5_cpa_pke_encrypt: sigma", pk, PARAMS_KAPPA_BYTES, 1);
-    print_hex("r5_cpa_pke_encrypt: m1", m1, BITS_TO_BYTES(PARAMS_MU * PARAMS_B_BITS), 1);
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_print_hex("r5_cpa_pke_encrypt: rho", rho, PARAMS_KAPPA_BYTES, 1);
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_print_hex("r5_cpa_pke_encrypt: sigma", pk, PARAMS_KAPPA_BYTES, 1);
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_print_hex("r5_cpa_pke_encrypt: m1", m1, BITS_TO_BYTES(PARAMS_MU * PARAMS_B_BITS), 1);
     #endif
 
-    PQCLEAN_ROUND5R5ND_1KEM_0D_pack_q_p_m_bar(ct, &U_T[0][0], PARAMS_H2); // ct = U^T | v
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_pack_q_p_m_bar(ct, &U_T[0][0], PARAMS_H2); // ct = U^T | v
 
     memset(ct + PARAMS_DPU_SIZE, 0, PARAMS_MUT_SIZE);
     j = 8 * PARAMS_DPU_SIZE;
@@ -368,7 +364,7 @@ int PQCLEAN_ROUND5R5ND_1KEM_0D_r5_cpa_pke_encrypt(uint8_t *ct, const uint8_t *pk
     return 0;
 }
 
-int PQCLEAN_ROUND5R5ND_1KEM_0D_r5_cpa_pke_decrypt(uint8_t *m, const uint8_t *sk, const uint8_t *ct) {
+int PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_r5_cpa_pke_decrypt(uint8_t *m, const uint8_t *sk, const uint8_t *ct) {
     size_t i, j;
     #ifdef CM_CACHE
     int16_t S_T[PARAMS_N_BAR][PARAMS_D];
@@ -380,9 +376,9 @@ int PQCLEAN_ROUND5R5ND_1KEM_0D_r5_cpa_pke_decrypt(uint8_t *m, const uint8_t *sk,
     modp_t t, X_prime[PARAMS_MU];
     uint8_t m1[BITS_TO_BYTES(PARAMS_MU * PARAMS_B_BITS)];
 
-    PQCLEAN_ROUND5R5ND_1KEM_0D_create_secret_matrix_s_t(S_T, sk);
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_create_secret_matrix_s_t(S_T, sk);
 
-    PQCLEAN_ROUND5R5ND_1KEM_0D_unpack_p_m_bar((modp_t *) U_T, ct); // ct = U^T | v
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_unpack_p_m_bar((modp_t *) U_T, ct); // ct = U^T | v
 
     j = 8 * PARAMS_DPU_SIZE;
     for (i = 0; i < PARAMS_MU; i++) {
@@ -399,7 +395,7 @@ int PQCLEAN_ROUND5R5ND_1KEM_0D_r5_cpa_pke_decrypt(uint8_t *m, const uint8_t *sk,
 
 
     // X' = S^T * U (mod p)
-    PQCLEAN_ROUND5R5ND_1KEM_0D_matmul_stu_p(X_prime, U_T, S_T);
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_matmul_stu_p(X_prime, U_T, S_T);
 
 
     // X' = v - X', compressed to 1 bit
@@ -421,13 +417,13 @@ int PQCLEAN_ROUND5R5ND_1KEM_0D_r5_cpa_pke_decrypt(uint8_t *m, const uint8_t *sk,
 
     #if (PARAMS_XE != 0)
     // Apply error correction
-    xef_compute(m1, PARAMS_KAPPA_BYTES, PARAMS_F);
-    xef_fixerr(m1, PARAMS_KAPPA_BYTES, PARAMS_F);
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_xef_compute(m1, PARAMS_KAPPA_BYTES, PARAMS_F);
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_xef_fixerr(m1, PARAMS_KAPPA_BYTES, PARAMS_F);
     #endif
     memcpy(m, m1, PARAMS_KAPPA_BYTES);
 
     #ifdef NIST_KAT_GENERATION
-    print_hex("r5_cpa_pke_decrypt: m", m, PARAMS_KAPPA_BYTES, 1);
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_print_hex("r5_cpa_pke_decrypt: m", m, PARAMS_KAPPA_BYTES, 1);
     #endif
 
     return 0;

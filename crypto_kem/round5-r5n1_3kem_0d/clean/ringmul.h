@@ -11,13 +11,13 @@
 #if PARAMS_K == 1
 
 // create a sparse ternary vector from a seed
-void PQCLEAN_ROUND5R5N1_3KEM_0D_create_secret_vector(uint16_t idx[PARAMS_H / 2][2], const uint8_t *seed);
+void PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_create_secret_vector(uint16_t idx[PARAMS_H / 2][2], const uint8_t *seed);
 
 // multiplication mod q, result length n
-void PQCLEAN_ROUND5R5N1_3KEM_0D_ringmul_q(modq_t d[PARAMS_ND], modq_t a[PARAMS_ND], uint16_t idx[PARAMS_H / 2][2]);
+void PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_ringmul_q(modq_t d[PARAMS_ND], modq_t a[PARAMS_ND], uint16_t idx[PARAMS_H / 2][2]);
 
 // multiplication mod p, result length mu
-void PQCLEAN_ROUND5R5N1_3KEM_0D_ringmul_p(modp_t d[PARAMS_MU], modp_t a[PARAMS_ND], uint16_t idx[PARAMS_H / 2][2]);
+void PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_ringmul_p(modp_t d[PARAMS_MU], modp_t a[PARAMS_ND], uint16_t idx[PARAMS_H / 2][2]);
 
 #endif
 

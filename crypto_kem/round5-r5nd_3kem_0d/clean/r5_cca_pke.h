@@ -22,7 +22,7 @@ extern "C" {
  * @param[out] sk     secret key (<b>important:</b> the size of `sk` is `sk_size` + `kappa_bytes` + `pk_size`!)
  * @return __0__ in case of success
  */
-int PQCLEAN_ROUND5R5ND_3KEM_0D_r5_cca_pke_keygen(unsigned char *pk, unsigned char *sk);
+int PQCLEAN_ROUND5R5ND_3KEM_0D_CLEAN_r5_cca_pke_keygen(unsigned char *pk, unsigned char *sk);
 
 /**
  * Encrypts a message. Uses the parameters as specified.
@@ -34,7 +34,7 @@ int PQCLEAN_ROUND5R5ND_3KEM_0D_r5_cca_pke_keygen(unsigned char *pk, unsigned cha
  * @param[in]  pk     the public key to use for the encryption
  * @return __0__ in case of success
  */
-int PQCLEAN_ROUND5R5ND_3KEM_0D_r5_cca_pke_encrypt(unsigned char *ct, unsigned long long *ct_len, const unsigned char *m, const unsigned long long m_len, const unsigned char *pk);
+int PQCLEAN_ROUND5R5ND_3KEM_0D_CLEAN_r5_cca_pke_encrypt(unsigned char *ct, unsigned long long *ct_len, const unsigned char *m, const unsigned long long m_len, const unsigned char *pk);
 
 /**
  * Decrypts a message. Uses the parameters as specified.
@@ -46,7 +46,7 @@ int PQCLEAN_ROUND5R5ND_3KEM_0D_r5_cca_pke_encrypt(unsigned char *ct, unsigned lo
  * @param[in]  sk      the secret key to use for the decryption
  * @return __0__ in case of success
  */
-int PQCLEAN_ROUND5R5ND_3KEM_0D_r5_cca_pke_decrypt(unsigned char *m, unsigned long long *m_len, const unsigned char *ct, const unsigned long long ct_len, const unsigned char *sk);
+int PQCLEAN_ROUND5R5ND_3KEM_0D_CLEAN_r5_cca_pke_decrypt(unsigned char *m, unsigned long long *m_len, const unsigned char *ct, const unsigned long long ct_len, const unsigned char *sk);
 
 #ifdef __cplusplus
 }

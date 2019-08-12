@@ -17,7 +17,7 @@
 
 // create a sparse ternary vector from a seed
 
-void PQCLEAN_ROUND5R5ND_1KEM_0D_create_secret_vector(uint16_t idx[PARAMS_H / 2][2], const uint8_t *seed) {
+void PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_create_secret_vector(uint16_t idx[PARAMS_H / 2][2], const uint8_t *seed) {
     size_t i;
     uint16_t x;
     uint8_t v[PARAMS_ND];
@@ -25,12 +25,12 @@ void PQCLEAN_ROUND5R5ND_1KEM_0D_create_secret_vector(uint16_t idx[PARAMS_H / 2][
 
     memset(v, 0, sizeof (v));
 
-    PQCLEAN_ROUND5R5ND_1KEM_0D_r5_xof_input(&ctx, seed, PARAMS_KAPPA_BYTES);
+    PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_r5_xof_input(&ctx, seed, PARAMS_KAPPA_BYTES);
 
     for (i = 0; i < PARAMS_H; i++) {
         do {
             do {
-                PQCLEAN_ROUND5R5ND_1KEM_0D_r5_xof_squeeze(&ctx, &x, sizeof(x));
+                PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_r5_xof_squeeze(&ctx, &x, sizeof(x));
             } while (x >= PARAMS_RS_LIM);
             x /= PARAMS_RS_DIV;
         } while (v[x]);
@@ -41,7 +41,7 @@ void PQCLEAN_ROUND5R5ND_1KEM_0D_create_secret_vector(uint16_t idx[PARAMS_H / 2][
 
 // multiplication mod q, result length n
 
-void PQCLEAN_ROUND5R5ND_1KEM_0D_ringmul_q(modq_t d[PARAMS_ND], modq_t a[PARAMS_ND], uint16_t idx[PARAMS_H / 2][2]) {
+void PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_ringmul_q(modq_t d[PARAMS_ND], modq_t a[PARAMS_ND], uint16_t idx[PARAMS_H / 2][2]) {
     size_t i, j;
     modq_t *p_add, *p_sub;
     modq_t p[2 * (PARAMS_ND + 1)];
@@ -79,7 +79,7 @@ void PQCLEAN_ROUND5R5ND_1KEM_0D_ringmul_q(modq_t d[PARAMS_ND], modq_t a[PARAMS_N
 
 // multiplication mod p, result length mu
 
-void PQCLEAN_ROUND5R5ND_1KEM_0D_ringmul_p(modp_t d[PARAMS_MU], modp_t a[PARAMS_ND], uint16_t idx[PARAMS_H / 2][2]) {
+void PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_ringmul_p(modp_t d[PARAMS_MU], modp_t a[PARAMS_ND], uint16_t idx[PARAMS_H / 2][2]) {
     size_t i, j;
     modp_t *p_add, *p_sub;
     modp_t p[(PARAMS_MU + 2) + (PARAMS_ND + 1)];

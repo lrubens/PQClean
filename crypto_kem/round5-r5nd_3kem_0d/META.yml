@@ -6,7 +6,7 @@ length-public-key: 909
 length-ciphertext: 981
 length-secret-key: 24
 length-shared-secret: 24
-# nistkat-sha256: 937d9b2e139112e13d4093a6afe715deff476e4d578208b9e8e1809de43835cd
+nistkat-sha256: e6dea6c9d7c98f452b430d77e3c3e04874a129e4ef90c7026ef57cf577fe4ada
 principal-submitters:
   - Oscar Garcia-Morchon
 implementations:

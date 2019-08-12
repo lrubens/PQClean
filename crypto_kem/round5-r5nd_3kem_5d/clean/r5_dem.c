@@ -17,7 +17,6 @@
 #include <openssl/evp.h>
 
 #include "r5_hash.h"
-#include "rng.h"
 #include "misc.h"
 #include "r5_memory.h"
 
@@ -25,7 +24,7 @@
  * Public functions
  ******************************************************************************/
 
-int PQCLEAN_ROUND5R5ND_3KEM_5D_round5_dem(unsigned char *c2, unsigned long long *c2_len, const unsigned char *key, const unsigned char *m, const unsigned long long m_len) {
+int PQCLEAN_ROUND5R5ND_3KEM_5D_CLEAN_round5_dem(unsigned char *c2, unsigned long long *c2_len, const unsigned char *key, const unsigned char *m, const unsigned long long m_len) {
     int result = 1;
     int len;
     int c2length;
@@ -36,7 +35,7 @@ int PQCLEAN_ROUND5R5ND_3KEM_5D_round5_dem(unsigned char *c2, unsigned long long 
 
     /* Hash key to obtain final key and IV */
     assert(PARAMS_KAPPA_BYTES == 32 || PARAMS_KAPPA_BYTES == 24 || PARAMS_KAPPA_BYTES == 16);
-    PQCLEAN_ROUND5R5ND_3KEM_5D_hash(final_key_iv, (size_t) (PARAMS_KAPPA_BYTES + 12), key, PARAMS_KAPPA_BYTES, PARAMS_KAPPA_BYTES);
+    PQCLEAN_ROUND5R5ND_3KEM_5D_CLEAN_hash(final_key_iv, (size_t) (PARAMS_KAPPA_BYTES + 12), key, PARAMS_KAPPA_BYTES, PARAMS_KAPPA_BYTES);
 
     /* Initialise AES GCM */
     int res = 1;
@@ -89,7 +88,7 @@ done_dem:
     return result;
 }
 
-int PQCLEAN_ROUND5R5ND_3KEM_5D_round5_dem_inverse(unsigned char *m, unsigned long long *m_len, const unsigned char *key, const unsigned char *c2, const unsigned long long c2_len) {
+int PQCLEAN_ROUND5R5ND_3KEM_5D_CLEAN_round5_dem_inverse(unsigned char *m, unsigned long long *m_len, const unsigned char *key, const unsigned char *c2, const unsigned long long c2_len) {
     int result = 1;
     int len;
     int m_length;
@@ -109,7 +108,7 @@ int PQCLEAN_ROUND5R5ND_3KEM_5D_round5_dem_inverse(unsigned char *m, unsigned lon
 
     /* Hash key to obtain final key and IV */
     assert(PARAMS_KAPPA_BYTES == 32 || PARAMS_KAPPA_BYTES == 24 || PARAMS_KAPPA_BYTES == 16);
-    PQCLEAN_ROUND5R5ND_3KEM_5D_hash(final_key_iv, (size_t) (PARAMS_KAPPA_BYTES + 12), key, PARAMS_KAPPA_BYTES, PARAMS_KAPPA_BYTES);
+    PQCLEAN_ROUND5R5ND_3KEM_5D_CLEAN_hash(final_key_iv, (size_t) (PARAMS_KAPPA_BYTES + 12), key, PARAMS_KAPPA_BYTES, PARAMS_KAPPA_BYTES);
 
     /* Get tag */
     memcpy(tag, c2 + c2_len_no_tag, 16);
@@ -138,7 +137,8 @@ int PQCLEAN_ROUND5R5ND_3KEM_5D_round5_dem_inverse(unsigned char *m, unsigned lon
     if ((diff >= 0 && diff < (ptrdiff_t) c2_len_no_tag) || (diff < 0 && diff > -((ptrdiff_t) c2_len_no_tag))) {
         /* EVP_DecryptUpdate does not handle overlapping pointers so we need
            to create a temporary buffer for the decrypted message. */
-        tmp_m = checked_malloc(c2_len_no_tag);
+        tmp_m = PQCLEAN_ROUND5R5ND_3KEM_5D_CLEAN_checked_malloc(c2_len_no_tag);
+        // tmp_m[c2_len_no_tag];
     }
     if (EVP_DecryptUpdate(ctx, tmp_m, &len, c2, (int) c2_len_no_tag) != 1) {
         goto done_dem_inverse;

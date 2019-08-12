@@ -46,8 +46,8 @@ inline int PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_crypto_encrypt_keypair(unsigned char
  * @param[in]  pk     the public key to use for the encryption
  * @return __0__ in case of success
  */
-inline int PQCLEAN_ROUND5R5N1_3KEM_0D_crypto_encrypt(unsigned char *ct, unsigned long long *ct_len, const unsigned char *m, const unsigned long long m_len, const unsigned char *pk) {
-    return PQCLEAN_ROUND5R5N1_3KEM_0D_r5_cca_pke_encrypt(ct, ct_len, m, m_len, pk);
+inline int PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_crypto_encrypt(unsigned char *ct, unsigned long long *ct_len, const unsigned char *m, const unsigned long long m_len, const unsigned char *pk) {
+    return PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_r5_cca_pke_encrypt(ct, ct_len, m, m_len, pk);
 }
 
 /**
@@ -60,8 +60,8 @@ inline int PQCLEAN_ROUND5R5N1_3KEM_0D_crypto_encrypt(unsigned char *ct, unsigned
  * @param[in]  sk     the secret key to use for the decryption
  * @return __0__ in case of success
  */
-inline int PQCLEAN_ROUND5R5N1_3KEM_0D_crypto_encrypt_open(unsigned char *m, unsigned long long *m_len, const unsigned char *ct, const unsigned long long ct_len, const unsigned char *sk) {
-    return PQCLEAN_ROUND5R5N1_3KEM_0D_r5_cca_pke_decrypt(m, m_len, ct, ct_len, sk);
+inline int PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_crypto_encrypt_open(unsigned char *m, unsigned long long *m_len, const unsigned char *ct, const unsigned long long ct_len, const unsigned char *sk) {
+    return PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_r5_cca_pke_decrypt(m, m_len, ct, ct_len, sk);
 }
 
 #endif

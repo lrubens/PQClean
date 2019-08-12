@@ -30,7 +30,7 @@ def load_instructions(filename):
 instructions = load_instructions("generate.yml")
 
 clean_files = ['META.yml', 'clean/Makefile', 'clean/Makefile.Microsoft_nmake']
-for root, dirs, files in os.walk(os.path.join('template', 'r5n1_1kem_0d', 'clean')):
+for root, dirs, files in os.walk(os.path.join('template', 'kem_template', 'clean')):
     for filename in files:
         if ".c" in filename or ".h" in filename:
             clean_files.append(os.path.join('clean', filename))
@@ -49,10 +49,10 @@ for family in instructions['round5']:
         subprocess.run([
             'cp',
             '-a',
-            os.path.join('template', 'r5n1_1kem_0d'),
+            os.path.join('template', 'kem_template'),
             os.path.join('crypto_kem', scheme_name)
         ])
-        templateloader = jinja2.FileSystemLoader(searchpath="./template/r5n1_1kem_0d")
+        templateloader = jinja2.FileSystemLoader(searchpath="./template/kem_template")
         templateEnv = jinja2.Environment(loader=templateloader)
         new_files = list()
         for file in clean_files:

@@ -36,7 +36,7 @@
 
 //  == XE4-163 (192-bit payload) ==
 
-void xe4_163_compute(void *block) {
+void PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_xe4_163_compute(void *block) {
     int i;
     uint64_t r13, r15, r16, r17, r19, r23, r29, r31;
     uint64_t *p64, x;
@@ -91,7 +91,7 @@ void xe4_163_compute(void *block) {
     ((uint8_t *) block)[44] ^= (uint8_t) (r31 >> 28);
 }
 
-void xe4_163_fixerr(void *block) {
+void PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_xe4_163_fixerr(void *block) {
     int i;
     uint64_t r13, r15, r16, r17, r19, r23, r29, r31;
     uint64_t *p64, x, c, t0, t1, t2;

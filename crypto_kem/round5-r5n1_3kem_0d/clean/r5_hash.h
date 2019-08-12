@@ -24,12 +24,12 @@
  * @param[in]  kappa_bytes the number of bytes of kappa (used to determine
  *                         the implementation of the hash function)
  */
-inline void PQCLEAN_ROUND5R5N1_3KEM_0D_hash(uint8_t *output, const size_t output_len, const uint8_t *input, const size_t input_len, const uint8_t kappa_bytes) {
+inline void PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_hash(uint8_t *output, const size_t output_len, const uint8_t *input, const size_t input_len, const uint8_t kappa_bytes) {
     uint8_t dummy = 0;
     dummy = kappa_bytes;
     dummy = dummy * 2;      // trying to avoid warning
     /* Since without customization, SHAKE == CSHAKE, we can use SHAKE here directly. */
-    PQCLEAN_ROUND5R5N1_3KEM_0D_r5_xof(output, output_len, input, input_len);
+    PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_r5_xof(output, output_len, input, input_len);
 }
 
 /**
@@ -45,11 +45,11 @@ inline void PQCLEAN_ROUND5R5N1_3KEM_0D_hash(uint8_t *output, const size_t output
  *                               determine the the implementation of the
  *                               hash function)
  */
-inline void PQCLEAN_ROUND5R5N1_3KEM_0D_hash_customization(uint8_t *output, const size_t output_len, const uint8_t *input, const size_t input_len, const uint8_t *customization, const size_t customization_len, const uint8_t kappa_bytes) {
+inline void PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_hash_customization(uint8_t *output, const size_t output_len, const uint8_t *input, const size_t input_len, const uint8_t *customization, const size_t customization_len, const uint8_t kappa_bytes) {
     if (kappa_bytes > 16) {
-        PQCLEAN_ROUND5R5N1_3KEM_0D_cshake256(output, output_len, NULL, 0, customization, customization_len, input, input_len);
+        PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_cshake256(output, output_len, NULL, 0, customization, customization_len, input, input_len);
     } else {
-        PQCLEAN_ROUND5R5N1_3KEM_0D_cshake128(output, output_len, NULL, 0, customization, customization_len, input, input_len);
+        PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_cshake128(output, output_len, NULL, 0, customization, customization_len, input, input_len);
     }
 }
 

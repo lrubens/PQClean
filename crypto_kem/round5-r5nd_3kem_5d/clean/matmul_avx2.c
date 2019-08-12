@@ -11,7 +11,7 @@
 
 #include "misc.h"
 
-#include "drbg.h"
+// #include "drbg.h"
 #include "little_endian.h"
 
 #include <immintrin.h>

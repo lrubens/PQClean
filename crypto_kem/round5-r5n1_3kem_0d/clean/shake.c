@@ -33,7 +33,7 @@ static size_t left_encode(uint8_t *encbuf, size_t value) {
     return n + 1;
 }
 
-void PQCLEAN_ROUND5R5N1_3KEM_0D_cshake128_inc_init(shake128incctx *state, const uint8_t *name, size_t namelen, const uint8_t *cstm, size_t cstmlen) {
+void PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_cshake128_inc_init(shake128incctx *state, const uint8_t *name, size_t namelen, const uint8_t *cstm, size_t cstmlen) {
     uint8_t encbuf[sizeof(size_t)+1];
 
     shake128_inc_init(state);
@@ -53,21 +53,21 @@ void PQCLEAN_ROUND5R5N1_3KEM_0D_cshake128_inc_init(shake128incctx *state, const 
     }
 }
 
-void PQCLEAN_ROUND5R5N1_3KEM_0D_cshake128_inc_absorb(shake128incctx *state, const uint8_t *input, size_t inlen) {
+void PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_cshake128_inc_absorb(shake128incctx *state, const uint8_t *input, size_t inlen) {
     shake128_inc_absorb(state, input, inlen);
 }
 
-void PQCLEAN_ROUND5R5N1_3KEM_0D_cshake128_inc_finalize(shake128incctx *state) {
+void PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_cshake128_inc_finalize(shake128incctx *state) {
     state->ctx[state->ctx[25] >> 3] ^= (uint64_t)0x04 << (8 * (state->ctx[25] & 0x07));
     state->ctx[(SHAKE128_RATE - 1) >> 3] ^= (uint64_t)128 << (8 * ((SHAKE128_RATE - 1) & 0x07));
     state->ctx[25] = 0;
 }
 
-void PQCLEAN_ROUND5R5N1_3KEM_0D_cshake128_inc_squeeze(uint8_t *output, size_t outlen, shake128incctx *state) {
+void PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_cshake128_inc_squeeze(uint8_t *output, size_t outlen, shake128incctx *state) {
     shake128_inc_squeeze(output, outlen, state);
 }
 
-void PQCLEAN_ROUND5R5N1_3KEM_0D_cshake256_inc_init(shake256incctx *state, const uint8_t *name, size_t namelen, const uint8_t *cstm, size_t cstmlen) {
+void PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_cshake256_inc_init(shake256incctx *state, const uint8_t *name, size_t namelen, const uint8_t *cstm, size_t cstmlen) {
     uint8_t encbuf[sizeof(size_t)+1];
 
     shake256_inc_init(state);
@@ -87,17 +87,17 @@ void PQCLEAN_ROUND5R5N1_3KEM_0D_cshake256_inc_init(shake256incctx *state, const 
     }
 }
 
-void PQCLEAN_ROUND5R5N1_3KEM_0D_cshake256_inc_absorb(shake256incctx *state, const uint8_t *input, size_t inlen) {
+void PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_cshake256_inc_absorb(shake256incctx *state, const uint8_t *input, size_t inlen) {
     shake256_inc_absorb(state, input, inlen);
 }
 
-void PQCLEAN_ROUND5R5N1_3KEM_0D_cshake256_inc_finalize(shake256incctx *state) {
+void PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_cshake256_inc_finalize(shake256incctx *state) {
     state->ctx[state->ctx[25] >> 3] ^= (uint64_t)0x04 << (8 * (state->ctx[25] & 0x07));
     state->ctx[(SHAKE256_RATE - 1) >> 3] ^= (uint64_t)128 << (8 * ((SHAKE256_RATE - 1) & 0x07));
     state->ctx[25] = 0;
 }
 
-void PQCLEAN_ROUND5R5N1_3KEM_0D_cshake256_inc_squeeze(uint8_t *output, size_t outlen, shake256incctx *state) {
+void PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_cshake256_inc_squeeze(uint8_t *output, size_t outlen, shake256incctx *state) {
     shake256_inc_squeeze(output, outlen, state);
 }
 
@@ -115,15 +115,15 @@ void PQCLEAN_ROUND5R5N1_3KEM_0D_cshake256_inc_squeeze(uint8_t *output, size_t ou
  *              - const uint8_t *input: pointer to input
  *              - size_t inlen: length of input in bytes
  **************************************************/
-void PQCLEAN_ROUND5R5N1_3KEM_0D_cshake128(uint8_t *output, size_t outlen,
+void PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_cshake128(uint8_t *output, size_t outlen,
                const uint8_t *name, size_t namelen,
                const uint8_t *cstm, size_t cstmlen,
                const uint8_t *input, size_t inlen) {
     shake128incctx state;
-    PQCLEAN_ROUND5R5N1_3KEM_0D_cshake128_inc_init(&state, name, namelen, cstm, cstmlen);
-    PQCLEAN_ROUND5R5N1_3KEM_0D_cshake128_inc_absorb(&state, input, inlen);
-    PQCLEAN_ROUND5R5N1_3KEM_0D_cshake128_inc_finalize(&state);
-    PQCLEAN_ROUND5R5N1_3KEM_0D_cshake128_inc_squeeze(output, outlen, &state);
+    PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_cshake128_inc_init(&state, name, namelen, cstm, cstmlen);
+    PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_cshake128_inc_absorb(&state, input, inlen);
+    PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_cshake128_inc_finalize(&state);
+    PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_cshake128_inc_squeeze(output, outlen, &state);
 }
 
 /*************************************************
@@ -140,19 +140,19 @@ void PQCLEAN_ROUND5R5N1_3KEM_0D_cshake128(uint8_t *output, size_t outlen,
  *              - const uint8_t *input: pointer to input
  *              - size_t inlen: length of input in bytes
  **************************************************/
-void PQCLEAN_ROUND5R5N1_3KEM_0D_cshake256(uint8_t *output, size_t outlen,
+void PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_cshake256(uint8_t *output, size_t outlen,
                const uint8_t *name, size_t namelen,
                const uint8_t *cstm, size_t cstmlen,
                const uint8_t *input, size_t inlen) {
     shake256incctx state;
-    PQCLEAN_ROUND5R5N1_3KEM_0D_cshake256_inc_init(&state, name, namelen, cstm, cstmlen);
-    PQCLEAN_ROUND5R5N1_3KEM_0D_cshake256_inc_absorb(&state, input, inlen);
-    PQCLEAN_ROUND5R5N1_3KEM_0D_cshake256_inc_finalize(&state);
-    PQCLEAN_ROUND5R5N1_3KEM_0D_cshake256_inc_squeeze(output, outlen, &state);
+    PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_cshake256_inc_init(&state, name, namelen, cstm, cstmlen);
+    PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_cshake256_inc_absorb(&state, input, inlen);
+    PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_cshake256_inc_finalize(&state);
+    PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_cshake256_inc_squeeze(output, outlen, &state);
 }
 
 
-void PQCLEAN_ROUND5R5N1_3KEM_0D_r5_xof_input(r5_xof_ctx_t *ctx,
+void PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_r5_xof_input(r5_xof_ctx_t *ctx,
                   const void *in, size_t in_len) {
     #if (PARAMS_KAPPA_BYTES > 16)
     shake256_inc_init(ctx);
@@ -165,7 +165,7 @@ void PQCLEAN_ROUND5R5N1_3KEM_0D_r5_xof_input(r5_xof_ctx_t *ctx,
     #endif
 }
 
-void PQCLEAN_ROUND5R5N1_3KEM_0D_r5_xof_squeeze(r5_xof_ctx_t *ctx,
+void PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_r5_xof_squeeze(r5_xof_ctx_t *ctx,
                     void *out, size_t out_len) {
     #if (PARAMS_KAPPA_BYTES > 16)
     shake256_inc_squeeze(out, out_len, ctx);
@@ -174,7 +174,7 @@ void PQCLEAN_ROUND5R5N1_3KEM_0D_r5_xof_squeeze(r5_xof_ctx_t *ctx,
     #endif
 }
 
-void PQCLEAN_ROUND5R5N1_3KEM_0D_r5_xof(void *out, size_t out_len,
+void PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_r5_xof(void *out, size_t out_len,
             const void *in, size_t in_len) {
     #if (PARAMS_KAPPA_BYTES > 16)
     shake256(out, out_len, in, in_len);
@@ -183,17 +183,17 @@ void PQCLEAN_ROUND5R5N1_3KEM_0D_r5_xof(void *out, size_t out_len,
     #endif
 }
 
-void PQCLEAN_ROUND5R5N1_3KEM_0D_r5_xof_s_input(r5_xof_ctx_t *ctx,
+void PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_r5_xof_s_input(r5_xof_ctx_t *ctx,
                     const void *in, size_t in_len,
                     const void *sstr, size_t sstr_len) {
     #if (PARAMS_KAPPA_BYTES > 16)
-    PQCLEAN_ROUND5R5N1_3KEM_0D_cshake256_inc_init(ctx, (const uint8_t *)"", 0, sstr, sstr_len);
-    PQCLEAN_ROUND5R5N1_3KEM_0D_cshake256_inc_absorb(ctx, in, in_len);
-    PQCLEAN_ROUND5R5N1_3KEM_0D_cshake256_inc_finalize(ctx);
+    PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_cshake256_inc_init(ctx, (const uint8_t *)"", 0, sstr, sstr_len);
+    PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_cshake256_inc_absorb(ctx, in, in_len);
+    PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_cshake256_inc_finalize(ctx);
     #else
-    PQCLEAN_ROUND5R5N1_3KEM_0D_cshake128_inc_init(ctx, (const uint8_t *)"", 0, sstr, sstr_len);
-    PQCLEAN_ROUND5R5N1_3KEM_0D_cshake128_inc_absorb(ctx, in, in_len);
-    PQCLEAN_ROUND5R5N1_3KEM_0D_cshake128_inc_finalize(ctx);
+    PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_cshake128_inc_init(ctx, (const uint8_t *)"", 0, sstr, sstr_len);
+    PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_cshake128_inc_absorb(ctx, in, in_len);
+    PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_cshake128_inc_finalize(ctx);
     #endif
 }
 

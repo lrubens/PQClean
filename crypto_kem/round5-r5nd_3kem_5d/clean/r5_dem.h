@@ -26,7 +26,7 @@ extern "C" {
  * @param[in]  m_len  the length of the message
  * @return __0__ in case of success
  */
-int PQCLEAN_ROUND5R5ND_3KEM_5D_round5_dem(unsigned char *c2, unsigned long long *c2_len, const unsigned char *key, const unsigned char *m, const unsigned long long m_len);
+int PQCLEAN_ROUND5R5ND_3KEM_5D_CLEAN_round5_dem(unsigned char *c2, unsigned long long *c2_len, const unsigned char *key, const unsigned char *m, const unsigned long long m_len);
 
 /**
  * Inverses the application of a DEM to a message.
@@ -38,7 +38,7 @@ int PQCLEAN_ROUND5R5ND_3KEM_5D_round5_dem(unsigned char *c2, unsigned long long 
  * @param[in]  c2_len  the length of the encapsulated message
  * @return __0__ in case of success
  */
-int PQCLEAN_ROUND5R5ND_3KEM_5D_round5_dem_inverse(unsigned char *m, unsigned long long *m_len, const unsigned char *key, const unsigned char *c2, const unsigned long long c2_len);
+int PQCLEAN_ROUND5R5ND_3KEM_5D_CLEAN_round5_dem_inverse(unsigned char *m, unsigned long long *m_len, const unsigned char *key, const unsigned char *c2, const unsigned long long c2_len);
 
 #ifdef __cplusplus
 }

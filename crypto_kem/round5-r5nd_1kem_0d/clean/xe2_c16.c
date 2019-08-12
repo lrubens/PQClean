@@ -19,7 +19,7 @@
 
 //  == XE5-53 (128-bit payload) ==
 
-void xe2_53_compute(void *block) {
+void PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_xe2_53_compute(void *block) {
     int i;
     uint16_t r11, r13, r14, r15;
     uint16_t *p16, x;
@@ -55,7 +55,7 @@ void xe2_53_compute(void *block) {
     *((uint8_t *) &p16[11]) ^= (uint8_t) ((r15 >> 10));
 }
 
-void xe2_53_fixerr(void *block) {
+void PQCLEAN_ROUND5R5ND_1KEM_0D_CLEAN_xe2_53_fixerr(void *block) {
     int i;
     uint16_t r11, r13, r14, r15;
     uint16_t *p16, x;

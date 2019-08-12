@@ -19,17 +19,10 @@ extern "C" {
 // Return value zero (false) indicates the slot was originally empty.
 
 #if PARAMS_K != 1
-<<<<<<< HEAD
-int PQCLEAN_ROUND5R5N1_3KEM_0D_probe_cm_odd(uint64_t *vplus, const uint16_t x);
-int PQCLEAN_ROUND5R5N1_3KEM_0D_probe_cm_even(uint64_t *vplus, const uint16_t x);
+int PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_probe_cm_odd(uint64_t *vplus, const uint16_t x);
+int PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_probe_cm_even(uint64_t *vplus, const uint16_t x);
 #else
-int PQCLEAN_ROUND5R5N1_3KEM_0D_probe_cm(uint64_t *v, const uint16_t x);
-=======
-int probe_cm_odd(uint64_t *vplus, const uint16_t x);
-int probe_cm_even(uint64_t *vplus, const uint16_t x);
-#else
-int probe_cm(uint64_t *v, const uint16_t x);
->>>>>>> e7113e585f7cfa33420468e7f9aa4e47a5515304
+int PQCLEAN_ROUND5R5N1_3KEM_0D_CLEAN_probe_cm(uint64_t *v, const uint16_t x);
 #endif
 
 #ifdef __cplusplus

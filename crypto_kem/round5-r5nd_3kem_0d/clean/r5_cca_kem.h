@@ -17,7 +17,7 @@ extern "C" {
  * @param[out] sk     secret key
  * @return __0__ in case of success
  */
-int PQCLEAN_ROUND5R5ND_3KEM_0D_r5_cca_kem_keygen(unsigned char *pk, unsigned char *sk);
+int PQCLEAN_ROUND5R5ND_3KEM_0D_CLEAN_r5_cca_kem_keygen(unsigned char *pk, unsigned char *sk);
 
 /**
  * CCA KEM encapsulate. Uses the parameters as specified.
@@ -27,7 +27,7 @@ int PQCLEAN_ROUND5R5ND_3KEM_0D_r5_cca_kem_keygen(unsigned char *pk, unsigned cha
  * @param[in]  pk     public key with which the message is encapsulated
  * @return __0__ in case of success
  */
-int PQCLEAN_ROUND5R5ND_3KEM_0D_r5_cca_kem_encapsulate(unsigned char *ct, unsigned char *k, const unsigned char *pk);
+int PQCLEAN_ROUND5R5ND_3KEM_0D_CLEAN_r5_cca_kem_encapsulate(unsigned char *ct, unsigned char *k, const unsigned char *pk);
 
 /**
  * CCA KEM de-capsulate. Uses the parameters as specified.
@@ -37,7 +37,7 @@ int PQCLEAN_ROUND5R5ND_3KEM_0D_r5_cca_kem_encapsulate(unsigned char *ct, unsigne
  * @param[in]  sk     secret key with which the message is to be de-capsulated (<b>important:</b> the size of `sk` is `sk_size` + `kappa_bytes` + `pk_size`!)
  * @return __0__ in case of success
  */
-int PQCLEAN_ROUND5R5ND_3KEM_0D_r5_cca_kem_decapsulate(unsigned char *k, const unsigned char *ct, const unsigned char *sk);
+int PQCLEAN_ROUND5R5ND_3KEM_0D_CLEAN_r5_cca_kem_decapsulate(unsigned char *k, const unsigned char *ct, const unsigned char *sk);
 
 #ifdef __cplusplus
 }

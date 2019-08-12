@@ -41,7 +41,7 @@ const unsigned xef_reg[5][3][10] = {
 //  Computes the parity code, XORs it at the end of payload
 //  len = payload (bytes). Returns (payload | xef) length in *bits*.
 
-size_t xef_compute(void *block, size_t len, unsigned f) {
+size_t PQCLEAN_ROUND5R5ND_5KEM_5D_CLEAN_xef_compute(void *block, size_t len, unsigned f) {
     uint8_t *v = (uint8_t *) block;
     size_t i, j, l, bit, pl;
     uint64_t x, t, r[10];
@@ -113,10 +113,10 @@ size_t xef_compute(void *block, size_t len, unsigned f) {
     return bit;
 }
 
-//  Fixes errors based on parity code. Call xef_compute() first to get delta.
+//  Fixes errors based on parity code. Call PQCLEAN_ROUND5R5ND_5KEM_5D_CLEAN_xef_compute() first to get delta.
 //  len = payload (bytes). Returns (payload | xef) length in *bits*.
 
-size_t xef_fixerr(void *block, size_t len, unsigned f) {
+size_t PQCLEAN_ROUND5R5ND_5KEM_5D_CLEAN_xef_fixerr(void *block, size_t len, unsigned f) {
     uint8_t *v = (uint8_t *) block;
     size_t i, j, l, bit;
     uint64_t r[10];

@@ -12,18 +12,17 @@
 
 #if PARAMS_K != 1 && !defined(CM_CACHE)
 
-#include "drbg.h"
 #include "little_endian.h"
 
 // create a sparse ternary vector from a seed
 
-void PQCLEAN_ROUND5R5N1_5KEM_0D_create_secret_matrix_s_t(uint16_t s_t[PARAMS_N_BAR][PARAMS_H / 2][2], const uint8_t *seed) {
+void PQCLEAN_ROUND5R5N1_5KEM_0D_CLEAN_create_secret_matrix_s_t(uint16_t s_t[PARAMS_N_BAR][PARAMS_H / 2][2], const uint8_t *seed) {
     size_t i, l;
     uint16_t x;
     uint8_t v[PARAMS_D];
     r5_xof_ctx_t ctx;
 
-    PQCLEAN_ROUND5R5N1_5KEM_0D_r5_xof_input(&ctx, seed, PARAMS_KAPPA_BYTES);
+    PQCLEAN_ROUND5R5N1_5KEM_0D_CLEAN_r5_xof_input(&ctx, seed, PARAMS_KAPPA_BYTES);
 
     for (l = 0; l < PARAMS_N_BAR; l++) {
         memset(v, 0, sizeof (v));
@@ -31,7 +30,7 @@ void PQCLEAN_ROUND5R5N1_5KEM_0D_create_secret_matrix_s_t(uint16_t s_t[PARAMS_N_B
         for (i = 0; i < PARAMS_H; i++) {
             do {
                 do {
-                    PQCLEAN_ROUND5R5N1_5KEM_0D_r5_xof_squeeze(&ctx, &x, sizeof(x));
+                    PQCLEAN_ROUND5R5N1_5KEM_0D_CLEAN_r5_xof_squeeze(&ctx, &x, sizeof(x));
                 } while (x >= PARAMS_RS_LIM);
                 x /= PARAMS_RS_DIV;
             } while (v[x]);
@@ -43,14 +42,14 @@ void PQCLEAN_ROUND5R5N1_5KEM_0D_create_secret_matrix_s_t(uint16_t s_t[PARAMS_N_B
 
 // create a sparse ternary vector from a seed
 
-void PQCLEAN_ROUND5R5N1_5KEM_0D_create_secret_matrix_r_t(uint16_t r_t[PARAMS_M_BAR][PARAMS_H / 2][2], const uint8_t *seed) {
+void PQCLEAN_ROUND5R5N1_5KEM_0D_CLEAN_create_secret_matrix_r_t(uint16_t r_t[PARAMS_M_BAR][PARAMS_H / 2][2], const uint8_t *seed) {
     size_t i, l;
     uint16_t x;
     uint8_t v[PARAMS_D];
     r5_xof_ctx_t ctx;
 
     // drbg_init(seed);
-    PQCLEAN_ROUND5R5N1_5KEM_0D_r5_xof_input(&ctx, seed, PARAMS_KAPPA_BYTES); 
+    PQCLEAN_ROUND5R5N1_5KEM_0D_CLEAN_r5_xof_input(&ctx, seed, PARAMS_KAPPA_BYTES); 
 
     for (l = 0; l < PARAMS_M_BAR; l++) {
         memset(v, 0, sizeof (v));
@@ -58,7 +57,7 @@ void PQCLEAN_ROUND5R5N1_5KEM_0D_create_secret_matrix_r_t(uint16_t r_t[PARAMS_M_B
         for (i = 0; i < PARAMS_H; i++) {
             do {
                 do {
-                    PQCLEAN_ROUND5R5N1_5KEM_0D_r5_xof_squeeze(&ctx, &x, sizeof(x));
+                    PQCLEAN_ROUND5R5N1_5KEM_0D_CLEAN_r5_xof_squeeze(&ctx, &x, sizeof(x));
                 } while (x >= PARAMS_RS_LIM);
                 x /= PARAMS_RS_DIV;
             } while (v[x]);
@@ -72,15 +71,15 @@ void PQCLEAN_ROUND5R5N1_5KEM_0D_create_secret_matrix_r_t(uint16_t r_t[PARAMS_M_B
 
 #if PARAMS_TAU == 0
 
-void PQCLEAN_ROUND5R5N1_5KEM_0D_matmul_as_q(modq_t d[PARAMS_D][PARAMS_N_BAR], modq_t a[PARAMS_D][PARAMS_D], uint16_t s_t[PARAMS_N_BAR][PARAMS_H / 2][2]) {
+void PQCLEAN_ROUND5R5N1_5KEM_0D_CLEAN_matmul_as_q(modq_t d[PARAMS_D][PARAMS_N_BAR], modq_t a[PARAMS_D][PARAMS_D], uint16_t s_t[PARAMS_N_BAR][PARAMS_H / 2][2]) {
 
 #elif PARAMS_TAU == 1
 
-void PQCLEAN_ROUND5R5N1_5KEM_0D_matmul_as_q(modq_t d[PARAMS_D][PARAMS_N_BAR], modq_t a[2 * PARAMS_D * PARAMS_D], uint32_t a_permutation[PARAMS_D], uint16_t s_t[PARAMS_N_BAR][PARAMS_H / 2][2]) {
+void PQCLEAN_ROUND5R5N1_5KEM_0D_CLEAN_matmul_as_q(modq_t d[PARAMS_D][PARAMS_N_BAR], modq_t a[2 * PARAMS_D * PARAMS_D], uint32_t a_permutation[PARAMS_D], uint16_t s_t[PARAMS_N_BAR][PARAMS_H / 2][2]) {
 
 #else
 
-void PQCLEAN_ROUND5R5N1_5KEM_0D_matmul_as_q(modq_t d[PARAMS_D][PARAMS_N_BAR], modq_t a[PARAMS_TAU2_LEN + PARAMS_D], uint16_t a_permutation[PARAMS_D], uint16_t s_t[PARAMS_N_BAR][PARAMS_H / 2][2]) {
+void PQCLEAN_ROUND5R5N1_5KEM_0D_CLEAN_matmul_as_q(modq_t d[PARAMS_D][PARAMS_N_BAR], modq_t a[PARAMS_TAU2_LEN + PARAMS_D], uint16_t a_permutation[PARAMS_D], uint16_t s_t[PARAMS_N_BAR][PARAMS_H / 2][2]) {
 
 #endif
     size_t i, j, l;
@@ -139,15 +138,15 @@ void PQCLEAN_ROUND5R5N1_5KEM_0D_matmul_as_q(modq_t d[PARAMS_D][PARAMS_N_BAR], mo
 
 #if PARAMS_TAU == 0
 
-void PQCLEAN_ROUND5R5N1_5KEM_0D_matmul_rta_q(modq_t d[PARAMS_M_BAR][PARAMS_D], modq_t a[PARAMS_D][PARAMS_D], uint16_t r_t[PARAMS_M_BAR][PARAMS_H / 2][2]) {
+void PQCLEAN_ROUND5R5N1_5KEM_0D_CLEAN_matmul_rta_q(modq_t d[PARAMS_M_BAR][PARAMS_D], modq_t a[PARAMS_D][PARAMS_D], uint16_t r_t[PARAMS_M_BAR][PARAMS_H / 2][2]) {
 
 #elif PARAMS_TAU == 1
 
-void PQCLEAN_ROUND5R5N1_5KEM_0D_matmul_rta_q(modq_t d[PARAMS_M_BAR][PARAMS_D], modq_t a[2 * PARAMS_D * PARAMS_D], uint32_t a_permutation[PARAMS_D], uint16_t r_t[PARAMS_M_BAR][PARAMS_H / 2][2]) {
+void PQCLEAN_ROUND5R5N1_5KEM_0D_CLEAN_matmul_rta_q(modq_t d[PARAMS_M_BAR][PARAMS_D], modq_t a[2 * PARAMS_D * PARAMS_D], uint32_t a_permutation[PARAMS_D], uint16_t r_t[PARAMS_M_BAR][PARAMS_H / 2][2]) {
 
 #else
 
-void PQCLEAN_ROUND5R5N1_5KEM_0D_matmul_rta_q(modq_t d[PARAMS_M_BAR][PARAMS_D], modq_t a[PARAMS_TAU2_LEN + PARAMS_D], uint16_t a_permutation[PARAMS_D], uint16_t r_t[PARAMS_M_BAR][PARAMS_H / 2][2]) {
+void PQCLEAN_ROUND5R5N1_5KEM_0D_CLEAN_matmul_rta_q(modq_t d[PARAMS_M_BAR][PARAMS_D], modq_t a[PARAMS_TAU2_LEN + PARAMS_D], uint16_t a_permutation[PARAMS_D], uint16_t r_t[PARAMS_M_BAR][PARAMS_H / 2][2]) {
 
 #endif
     size_t i, j, l;
@@ -177,7 +176,7 @@ void PQCLEAN_ROUND5R5N1_5KEM_0D_matmul_rta_q(modq_t d[PARAMS_M_BAR][PARAMS_D], m
 
 // X' = S^T * U
 
-void PQCLEAN_ROUND5R5N1_5KEM_0D_matmul_stu_p(modp_t d[PARAMS_MU], modp_t u_t[PARAMS_M_BAR][PARAMS_D], uint16_t s_t[PARAMS_N_BAR][PARAMS_H / 2][2]) {
+void PQCLEAN_ROUND5R5N1_5KEM_0D_CLEAN_matmul_stu_p(modp_t d[PARAMS_MU], modp_t u_t[PARAMS_M_BAR][PARAMS_D], uint16_t s_t[PARAMS_N_BAR][PARAMS_H / 2][2]) {
     size_t k, i, j;
 
     // Initialize result
@@ -196,7 +195,7 @@ void PQCLEAN_ROUND5R5N1_5KEM_0D_matmul_stu_p(modp_t d[PARAMS_MU], modp_t u_t[PAR
 
 // X = B^T * R
 
-void PQCLEAN_ROUND5R5N1_5KEM_0D_matmul_btr_p(modp_t d[PARAMS_MU], modp_t b[PARAMS_D][PARAMS_N_BAR], uint16_t r_t[PARAMS_M_BAR][PARAMS_H / 2][2]) {
+void PQCLEAN_ROUND5R5N1_5KEM_0D_CLEAN_matmul_btr_p(modp_t d[PARAMS_MU], modp_t b[PARAMS_D][PARAMS_N_BAR], uint16_t r_t[PARAMS_M_BAR][PARAMS_H / 2][2]) {
     size_t i, j, l;
 
     // Initialize result

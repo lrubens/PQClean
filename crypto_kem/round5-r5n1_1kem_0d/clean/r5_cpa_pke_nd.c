@@ -24,27 +24,27 @@
 /* Wrapper around xef functions so we can seamlessly make use of the optimized xe5 */
 #if PARAMS_F == 5
 #if PARAMS_XE == 190
-#define XEF(function, block, len, f) xe5_190_##function(block)
+#define XEF(function, block, len, f) PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_xe5_190_##function(block)
 #elif PARAMS_XE == 218
-#define XEF(function, block, len, f) xe5_218_##function(block)
+#define XEF(function, block, len, f) PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_xe5_218_##function(block)
 #elif PARAMS_XE == 234
-#define XEF(function, block, len, f) xe5_234_##function(block)
+#define XEF(function, block, len, f) PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_xe5_234_##function(block)
 #endif
 #elif PARAMS_F == 4 && PARAMS_XE == 163
-#define XEF(function, block, len, f) xe4_163_##function(block)
+#define XEF(function, block, len, f) PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_xe4_163_##function(block)
 #elif PARAMS_F == 2 && PARAMS_XE == 53
-#define XEF(function, block, len, f) xe2_53_##function(block)
+#define XEF(function, block, len, f) PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_xe2_53_##function(block)
 #else
-#define XEF(function, block, len, f) xef_##function(block, len, f)
+#define XEF(function, block, len, f) PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_xef_##function(block, len, f)
 #endif
-#define xef_compute(block, len, f) XEF(compute, block, len, f)
-#define xef_fixerr(block, len, f) XEF(fixerr, block, len, f)
+#define PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_xef_compute(block, len, f) XEF(compute, block, len, f)
+#define PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_xef_fixerr(block, len, f) XEF(fixerr, block, len, f)
 
 #endif
 
 // compress ND elements of q bits into p bits and pack into a byte string
 
-static void PQCLEAN_ROUND5R5N1_1KEM_0D_pack_q_p(uint8_t *pv, const modq_t *vq, const modq_t rounding_constant) {
+static void PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_pack_q_p(uint8_t *pv, const modq_t *vq, const modq_t rounding_constant) {
     #if (PARAMS_P_BITS == 8)
     size_t i;
 
@@ -70,7 +70,7 @@ static void PQCLEAN_ROUND5R5N1_1KEM_0D_pack_q_p(uint8_t *pv, const modq_t *vq, c
 
 // unpack a byte string into ND elements of p bits
 
-static void PQCLEAN_ROUND5R5N1_1KEM_0D_unpack_p(modp_t *vp, const uint8_t *pv) {
+static void PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_unpack_p(modp_t *vp, const uint8_t *pv) {
     #if (PARAMS_P_BITS == 8)
     memcpy(vp, pv, PARAMS_ND);
     #else
@@ -91,7 +91,7 @@ static void PQCLEAN_ROUND5R5N1_1KEM_0D_unpack_p(modp_t *vp, const uint8_t *pv) {
 
 // generate a keypair (sigma, B)
 
-int PQCLEAN_ROUND5R5N1_1KEM_0D_r5_cpa_pke_keygen(uint8_t *pk, uint8_t *sk) {
+int PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_r5_cpa_pke_keygen(uint8_t *pk, uint8_t *sk) {
     modq_t A[PARAMS_ND];
     modq_t B[PARAMS_ND];
     uint16_t S_idx[PARAMS_H / 2][2];
@@ -99,24 +99,24 @@ int PQCLEAN_ROUND5R5N1_1KEM_0D_r5_cpa_pke_keygen(uint8_t *pk, uint8_t *sk) {
     randombytes(pk, PARAMS_KAPPA_BYTES); // sigma = seed of A
     #ifdef NIST_KAT_GENERATION
     printf("r5_cpa_pke_keygen: tau=%u\n", PARAMS_TAU);
-    print_hex("r5_cpa_pke_keygen: sigma", pk, PARAMS_KAPPA_BYTES, 1);
+    PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_print_hex("r5_cpa_pke_keygen: sigma", pk, PARAMS_KAPPA_BYTES, 1);
     #endif
 
     // A from sigma
-    PQCLEAN_ROUND5R5N1_1KEM_0D_create_A_random(A, pk);
+    PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_create_A_random(A, pk);
 
     randombytes(sk, PARAMS_KAPPA_BYTES); // secret key -- Random S
-    PQCLEAN_ROUND5R5N1_1KEM_0D_create_secret_vector(S_idx, sk);
+    PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_create_secret_vector(S_idx, sk);
 
-    PQCLEAN_ROUND5R5N1_1KEM_0D_ringmul_q(B, A, S_idx); // B = A * S
+    PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_ringmul_q(B, A, S_idx); // B = A * S
 
     // Compress B q_bits -> p_bits, pk = sigma | B
-    PQCLEAN_ROUND5R5N1_1KEM_0D_pack_q_p(pk + PARAMS_KAPPA_BYTES, B, PARAMS_H1);
+    PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_pack_q_p(pk + PARAMS_KAPPA_BYTES, B, PARAMS_H1);
 
     return 0;
 }
 
-int PQCLEAN_ROUND5R5N1_1KEM_0D_r5_cpa_pke_encrypt(uint8_t *ct, const uint8_t *pk, const uint8_t *m, const uint8_t *rho) {
+int PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_r5_cpa_pke_encrypt(uint8_t *ct, const uint8_t *pk, const uint8_t *m, const uint8_t *rho) {
     size_t i, j;
     modq_t A[PARAMS_ND];
     uint16_t R_idx[PARAMS_H / 2][2];
@@ -127,30 +127,30 @@ int PQCLEAN_ROUND5R5N1_1KEM_0D_r5_cpa_pke_encrypt(uint8_t *ct, const uint8_t *pk
     modp_t t, tm;
 
     // unpack public key
-    PQCLEAN_ROUND5R5N1_1KEM_0D_unpack_p(B, pk + PARAMS_KAPPA_BYTES);
+    PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_unpack_p(B, pk + PARAMS_KAPPA_BYTES);
 
     // A from sigma
-    PQCLEAN_ROUND5R5N1_1KEM_0D_create_A_random(A, pk);
+    PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_create_A_random(A, pk);
 
     memcpy(m1, m, PARAMS_KAPPA_BYTES); // add error correction code
     memset(m1 + PARAMS_KAPPA_BYTES, 0, BITS_TO_BYTES(PARAMS_MU * PARAMS_B_BITS) - PARAMS_KAPPA_BYTES);
     #if (PARAMS_XE != 0)
-    xef_compute(m1, PARAMS_KAPPA_BYTES, PARAMS_F);
+    PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_xef_compute(m1, PARAMS_KAPPA_BYTES, PARAMS_F);
     #endif
 
     // Create R
-    PQCLEAN_ROUND5R5N1_1KEM_0D_create_secret_vector(R_idx, rho);
+    PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_create_secret_vector(R_idx, rho);
 
-    PQCLEAN_ROUND5R5N1_1KEM_0D_ringmul_q(U_T, A, R_idx); // U^T == U = A^T * R == A * R (mod q)
-    PQCLEAN_ROUND5R5N1_1KEM_0D_ringmul_p(X, B, R_idx); // X = B^T * R == B * R (mod p)
+    PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_ringmul_q(U_T, A, R_idx); // U^T == U = A^T * R == A * R (mod q)
+    PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_ringmul_p(X, B, R_idx); // X = B^T * R == B * R (mod p)
 
     #ifdef NIST_KAT_GENERATION
-    print_hex("r5_cpa_pke_encrypt: rho", rho, PARAMS_KAPPA_BYTES, 1);
-    print_hex("r5_cpa_pke_encrypt: sigma", pk, PARAMS_KAPPA_BYTES, 1);
-    print_hex("r5_cpa_pke_encrypt: m1", m1, BITS_TO_BYTES(PARAMS_MU * PARAMS_B_BITS), 1);
+    PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_print_hex("r5_cpa_pke_encrypt: rho", rho, PARAMS_KAPPA_BYTES, 1);
+    PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_print_hex("r5_cpa_pke_encrypt: sigma", pk, PARAMS_KAPPA_BYTES, 1);
+    PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_print_hex("r5_cpa_pke_encrypt: m1", m1, BITS_TO_BYTES(PARAMS_MU * PARAMS_B_BITS), 1);
     #endif
 
-    PQCLEAN_ROUND5R5N1_1KEM_0D_pack_q_p(ct, U_T, PARAMS_H2); // ct = U^T | v
+    PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_pack_q_p(ct, U_T, PARAMS_H2); // ct = U^T | v
 
     memset(ct + PARAMS_NDP_SIZE, 0, PARAMS_MUT_SIZE);
     j = 8 * PARAMS_NDP_SIZE;
@@ -178,7 +178,7 @@ int PQCLEAN_ROUND5R5N1_1KEM_0D_r5_cpa_pke_encrypt(uint8_t *ct, const uint8_t *pk
     return 0;
 }
 
-int PQCLEAN_ROUND5R5N1_1KEM_0D_r5_cpa_pke_decrypt(uint8_t *m, const uint8_t *sk, const uint8_t *ct) {
+int PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_r5_cpa_pke_decrypt(uint8_t *m, const uint8_t *sk, const uint8_t *ct) {
     size_t i, j;
     uint16_t S_idx[PARAMS_H / 2][2];
     modp_t U_T[PARAMS_ND];
@@ -186,9 +186,9 @@ int PQCLEAN_ROUND5R5N1_1KEM_0D_r5_cpa_pke_decrypt(uint8_t *m, const uint8_t *sk,
     modp_t t, X_prime[PARAMS_MU];
     uint8_t m1[BITS_TO_BYTES(PARAMS_MU * PARAMS_B_BITS)];
 
-    PQCLEAN_ROUND5R5N1_1KEM_0D_create_secret_vector(S_idx, sk);
+    PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_create_secret_vector(S_idx, sk);
 
-    PQCLEAN_ROUND5R5N1_1KEM_0D_unpack_p(U_T, ct); // ct = U^T | v
+    PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_unpack_p(U_T, ct); // ct = U^T | v
 
     j = 8 * PARAMS_NDP_SIZE;
     for (i = 0; i < PARAMS_MU; i++) {
@@ -201,7 +201,7 @@ int PQCLEAN_ROUND5R5N1_1KEM_0D_r5_cpa_pke_decrypt(uint8_t *m, const uint8_t *sk,
     }
 
 
-    PQCLEAN_ROUND5R5N1_1KEM_0D_ringmul_p(X_prime, U_T, S_idx); // X' = S^T * U == U^T * S (mod p)
+    PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_ringmul_p(X_prime, U_T, S_idx); // X' = S^T * U == U^T * S (mod p)
 
 
     // X' = v - X', compressed to 1 bit
@@ -223,13 +223,13 @@ int PQCLEAN_ROUND5R5N1_1KEM_0D_r5_cpa_pke_decrypt(uint8_t *m, const uint8_t *sk,
 
     #if (PARAMS_XE != 0)
     // Apply error correction
-    xef_compute(m1, PARAMS_KAPPA_BYTES, PARAMS_F);
-    xef_fixerr(m1, PARAMS_KAPPA_BYTES, PARAMS_F);
+    PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_xef_compute(m1, PARAMS_KAPPA_BYTES, PARAMS_F);
+    PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_xef_fixerr(m1, PARAMS_KAPPA_BYTES, PARAMS_F);
     #endif
     memcpy(m, m1, PARAMS_KAPPA_BYTES);
 
     #ifdef NIST_KAT_GENERATION
-    print_hex("r5_cpa_pke_decrypt: m", m, PARAMS_KAPPA_BYTES, 1);
+    PQCLEAN_ROUND5R5N1_1KEM_0D_CLEAN_print_hex("r5_cpa_pke_decrypt: m", m, PARAMS_KAPPA_BYTES, 1);
     #endif
 
     return 0;

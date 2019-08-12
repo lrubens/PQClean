@@ -31,8 +31,6 @@ static void printbytes(const uint8_t *x, size_t xlen) {
 #define crypto_kem_dec NAMESPACE(crypto_kem_dec)
 
 int main(void) {
-    printf("\n\n\nCRYPTO_PUBLIC: %d\n\n\n\n", CRYPTO_PUBLICKEYBYTES);
-    printf("\n\nCRYPTO_BYTES: %d \n\n", CRYPTO_BYTES);
     uint8_t key_a[CRYPTO_BYTES], key_b[CRYPTO_BYTES];
     uint8_t pk[CRYPTO_PUBLICKEYBYTES];
     uint8_t sendb[CRYPTO_CIPHERTEXTBYTES];

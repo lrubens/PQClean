@@ -78,7 +78,7 @@
 
 //  == XE5-190 (128-bit payload) ==
 
-void xe5_190_compute(void *block) {
+void PQCLEAN_ROUND5R5ND_5KEM_0D_CLEAN_xe5_190_compute(void *block) {
     uint64_t rp8, r11, r13, r16, r17, r19, r21, r23, r25, r29;
     uint64_t *p64, x;
 
@@ -143,7 +143,7 @@ void xe5_190_compute(void *block) {
     p64[4] ^= LITTLE_ENDIAN64(x);
 }
 
-void xe5_190_fixerr(void *block) {
+void PQCLEAN_ROUND5R5ND_5KEM_0D_CLEAN_xe5_190_fixerr(void *block) {
     uint64_t rp8, r11, r13, r16, r17, r19, r21, r23, r25, r29;
     uint64_t *p64, x, y, c, t1, t2;
 
@@ -203,7 +203,7 @@ void xe5_190_fixerr(void *block) {
 
 //  == XE5-218 (192-bit payload) ==
 
-void xe5_218_compute(void *block) {
+void PQCLEAN_ROUND5R5ND_5KEM_0D_CLEAN_xe5_218_compute(void *block) {
     int i;
     uint64_t rp8, r13, r16, r17, r19, r21, r23, r25, r29, r31;
     uint64_t *p64, x;
@@ -264,7 +264,7 @@ void xe5_218_compute(void *block) {
     *((uint32_t *) &p64[6]) ^= (uint32_t) LITTLE_ENDIAN32(r31 >> 5);
 }
 
-void xe5_218_fixerr(void *block) {
+void PQCLEAN_ROUND5R5ND_5KEM_0D_CLEAN_xe5_218_fixerr(void *block) {
     int i;
     uint64_t rp8, r13, r16, r17, r19, r21, r23, r25, r29, r31;
     uint64_t *p64, x, y, c, t1, t2;
@@ -326,7 +326,7 @@ void xe5_218_fixerr(void *block) {
 
 //  == XE5-234 (256-bit payload) ==
 
-void xe5_234_compute(void *block) {
+void PQCLEAN_ROUND5R5ND_5KEM_0D_CLEAN_xe5_234_compute(void *block) {
     int i;
     uint64_t p16, r16, r17, r19, r21, r23, r25, r29, r31, r37;
     uint64_t *p64, x;
@@ -389,7 +389,7 @@ void xe5_234_compute(void *block) {
     ((uint16_t *) &p64[7])[2] ^= (uint16_t) LITTLE_ENDIAN16(x >> 32);
 }
 
-void xe5_234_fixerr(void *block) {
+void PQCLEAN_ROUND5R5ND_5KEM_0D_CLEAN_xe5_234_fixerr(void *block) {
     int i;
     uint64_t p16, r16, r17, r19, r21, r23, r25, r29, r31, r37;
     uint64_t *p64, x, y, c, t1, t2;

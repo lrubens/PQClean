@@ -79,7 +79,7 @@ extern "C" {
  *              unsigned integer
  * @return the 8 bit value represented by the byte
  */
-inline uint8_t u8_from_le(const unsigned char *x) {
+inline uint8_t PQCLEAN_ROUND5R5ND_3KEM_0D_CLEAN_u8_from_le(const unsigned char *x) {
     return (uint8_t) x[0];
 }
 
@@ -89,7 +89,7 @@ inline uint8_t u8_from_le(const unsigned char *x) {
  * @param[out] x array of 1 bytes
  * @param[in]  u the 8 bit unsigned integer
  */
-inline void u8_to_le(unsigned char *x, const uint8_t u) {
+inline void PQCLEAN_ROUND5R5ND_3KEM_0D_CLEAN_u8_to_le(unsigned char *x, const uint8_t u) {
     x[0] = u;
 }
 
@@ -100,7 +100,7 @@ inline void u8_to_le(unsigned char *x, const uint8_t u) {
  *              unsigned integer
  * @return the 16 bit value represented by the 2 bytes
  */
-inline uint16_t u16_from_le(const unsigned char *x) {
+inline uint16_t PQCLEAN_ROUND5R5ND_3KEM_0D_CLEAN_u16_from_le(const unsigned char *x) {
     return (uint16_t) (x[0]
                        | (uint16_t) (x[1]) << 8);
 }
@@ -112,7 +112,7 @@ inline uint16_t u16_from_le(const unsigned char *x) {
  * @param[out] x array of 2 bytes
  * @param[in]  u the 16 bit unsigned integer
  */
-inline void u16_to_le(unsigned char *x, const uint16_t u) {
+inline void PQCLEAN_ROUND5R5ND_3KEM_0D_CLEAN_u16_to_le(unsigned char *x, const uint16_t u) {
     x[0] = (unsigned char) u;
     x[1] = (unsigned char) (u >> 8);
 }
@@ -124,7 +124,7 @@ inline void u16_to_le(unsigned char *x, const uint16_t u) {
  *              unsigned integer
  * @return the 32 bit value represented by the 4 bytes
  */
-inline uint32_t u32_from_le(const unsigned char *x) {
+inline uint32_t PQCLEAN_ROUND5R5ND_3KEM_0D_CLEAN_u32_from_le(const unsigned char *x) {
     return (uint32_t) (x[0])
            | (((uint32_t) (x[1])) << 8)
            | (((uint32_t) (x[2])) << 16)
@@ -138,7 +138,7 @@ inline uint32_t u32_from_le(const unsigned char *x) {
  * @param[out] x array of 4 bytes
  * @param[in]  u the 32 bit unsigned integer
  */
-inline void u32_to_le(unsigned char *x, const uint32_t u) {
+inline void PQCLEAN_ROUND5R5ND_3KEM_0D_CLEAN_u32_to_le(unsigned char *x, const uint32_t u) {
     x[0] = (unsigned char) u;
     x[1] = (unsigned char) (u >> 8);
     x[2] = (unsigned char) (u >> 16);
@@ -152,7 +152,7 @@ inline void u32_to_le(unsigned char *x, const uint32_t u) {
  *              unsigned integer
  * @return the 64 bit value represented by the 8 bytes
  */
-inline uint64_t u64_from_le(const unsigned char *x) {
+inline uint64_t PQCLEAN_ROUND5R5ND_3KEM_0D_CLEAN_u64_from_le(const unsigned char *x) {
     return (uint64_t) (x[0])
            | (((uint64_t) (x[1])) << 8)
            | (((uint64_t) (x[2])) << 16)
@@ -170,7 +170,7 @@ inline uint64_t u64_from_le(const unsigned char *x) {
  * @param[out] x array of 8 bytes
  * @param[in]  u the 64 bit unsigned integer
  */
-inline void u64_to_le(unsigned char *x, const uint64_t u) {
+inline void PQCLEAN_ROUND5R5ND_3KEM_0D_CLEAN_u64_to_le(unsigned char *x, const uint64_t u) {
     x[0] = (unsigned char) u;
     x[1] = (unsigned char) (u >> 8);
     x[2] = (unsigned char) (u >> 16);

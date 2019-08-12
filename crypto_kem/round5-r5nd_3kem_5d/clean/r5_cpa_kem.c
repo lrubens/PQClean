@@ -18,15 +18,15 @@
 
 // CPA-KEM KeyGen()
 
-int PQCLEAN_ROUND5R5ND_3KEM_5D_r5_cpa_kem_keygen(uint8_t *pk, uint8_t *sk) {
-    PQCLEAN_ROUND5R5ND_3KEM_5D_r5_cpa_pke_keygen(pk, sk);
+int PQCLEAN_ROUND5R5ND_3KEM_5D_CLEAN_r5_cpa_kem_keygen(uint8_t *pk, uint8_t *sk) {
+    PQCLEAN_ROUND5R5ND_3KEM_5D_CLEAN_r5_cpa_pke_keygen(pk, sk);
 
     return 0;
 }
 
 // CPA-KEM Encaps()
 
-int PQCLEAN_ROUND5R5ND_3KEM_5D_r5_cpa_kem_encapsulate(uint8_t *ct, uint8_t *k, const uint8_t *pk) {
+int PQCLEAN_ROUND5R5ND_3KEM_5D_CLEAN_r5_cpa_kem_encapsulate(uint8_t *ct, uint8_t *k, const uint8_t *pk) {
     uint8_t hash_input[PARAMS_KAPPA_BYTES + PARAMS_CT_SIZE];
 
     uint8_t m[PARAMS_KAPPA_BYTES];
@@ -36,29 +36,29 @@ int PQCLEAN_ROUND5R5ND_3KEM_5D_r5_cpa_kem_encapsulate(uint8_t *ct, uint8_t *k, c
     randombytes(m, PARAMS_KAPPA_BYTES);
     randombytes(rho, PARAMS_KAPPA_BYTES);
 
-    PQCLEAN_ROUND5R5ND_3KEM_5D_r5_cpa_pke_encrypt(ct, pk, m, rho);
+    PQCLEAN_ROUND5R5ND_3KEM_5D_CLEAN_r5_cpa_pke_encrypt(ct, pk, m, rho);
 
     /* k = H(m, ct) */
     memcpy(hash_input, m, PARAMS_KAPPA_BYTES);
     memcpy(hash_input + PARAMS_KAPPA_BYTES, ct, PARAMS_CT_SIZE);
-    PQCLEAN_ROUND5R5ND_3KEM_5D_hash(k, PARAMS_KAPPA_BYTES, hash_input, PARAMS_KAPPA_BYTES + PARAMS_CT_SIZE, PARAMS_KAPPA_BYTES);
+    PQCLEAN_ROUND5R5ND_3KEM_5D_CLEAN_hash(k, PARAMS_KAPPA_BYTES, hash_input, PARAMS_KAPPA_BYTES + PARAMS_CT_SIZE, PARAMS_KAPPA_BYTES);
 
     return 0;
 }
 
 // CPA-KEM Decaps()
 
-int PQCLEAN_ROUND5R5ND_3KEM_5D_r5_cpa_kem_decapsulate(uint8_t *k, const uint8_t *ct, const uint8_t *sk) {
+int PQCLEAN_ROUND5R5ND_3KEM_5D_CLEAN_r5_cpa_kem_decapsulate(uint8_t *k, const uint8_t *ct, const uint8_t *sk) {
     uint8_t hash_input[PARAMS_KAPPA_BYTES + PARAMS_CT_SIZE];
     uint8_t m[PARAMS_KAPPA_BYTES];
 
     /* Decrypt m */
-    PQCLEAN_ROUND5R5ND_3KEM_5D_r5_cpa_pke_decrypt(m, sk, ct);
+    PQCLEAN_ROUND5R5ND_3KEM_5D_CLEAN_r5_cpa_pke_decrypt(m, sk, ct);
 
     /* k = H(m, ct) */
     memcpy(hash_input, m, PARAMS_KAPPA_BYTES);
     memcpy(hash_input + PARAMS_KAPPA_BYTES, ct, PARAMS_CT_SIZE);
-    PQCLEAN_ROUND5R5ND_3KEM_5D_hash(k, PARAMS_KAPPA_BYTES, hash_input, PARAMS_KAPPA_BYTES + PARAMS_CT_SIZE, PARAMS_KAPPA_BYTES);
+    PQCLEAN_ROUND5R5ND_3KEM_5D_CLEAN_hash(k, PARAMS_KAPPA_BYTES, hash_input, PARAMS_KAPPA_BYTES + PARAMS_CT_SIZE, PARAMS_KAPPA_BYTES);
 
     return 0;
 }

@@ -22,7 +22,7 @@ extern "C" {
  * @param[out] A_random     the random A to create
  * @param[in]  seed         the seed (PARAMS_KAPPA_BYTES bytes)
  */
-void PQCLEAN_ROUND5R5ND_3KEM_5D_create_A_random(modq_t *A_random, const unsigned char *seed);
+void PQCLEAN_ROUND5R5ND_3KEM_5D_CLEAN_create_A_random(modq_t *A_random, const unsigned char *seed);
 
 #ifdef __cplusplus
 }

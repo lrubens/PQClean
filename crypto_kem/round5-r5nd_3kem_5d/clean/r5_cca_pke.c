@@ -14,7 +14,7 @@
 #include "r5_dem.h"
 #include "r5_hash.h"
 #include "misc.h"
-#include "rng.h"
+// #include "rng.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,11 +24,11 @@
  * Public functions
  ******************************************************************************/
 
-int PQCLEAN_ROUND5R5ND_3KEM_5D_r5_cca_pke_keygen(unsigned char *pk, unsigned char *sk) {
-    return PQCLEAN_ROUND5R5ND_3KEM_5D_r5_cca_kem_keygen(pk, sk);
+int PQCLEAN_ROUND5R5ND_3KEM_5D_CLEAN_r5_cca_pke_keygen(unsigned char *pk, unsigned char *sk) {
+    return PQCLEAN_ROUND5R5ND_3KEM_5D_CLEAN_r5_cca_kem_keygen(pk, sk);
 }
 
-int PQCLEAN_ROUND5R5ND_3KEM_5D_r5_cca_pke_encrypt(unsigned char *ct, unsigned long long *ct_len, const unsigned char *m, const unsigned long long m_len, const unsigned char *pk) {
+int PQCLEAN_ROUND5R5ND_3KEM_5D_CLEAN_r5_cca_pke_encrypt(unsigned char *ct, unsigned long long *ct_len, const unsigned char *m, const unsigned long long m_len, const unsigned char *pk) {
     int result = -1;
     const unsigned long long c1_len = PARAMS_CT_SIZE + PARAMS_KAPPA_BYTES;
     unsigned char c1[PARAMS_CT_SIZE + PARAMS_KAPPA_BYTES];
@@ -36,14 +36,14 @@ int PQCLEAN_ROUND5R5ND_3KEM_5D_r5_cca_pke_encrypt(unsigned char *ct, unsigned lo
     unsigned char k[PARAMS_KAPPA_BYTES];
 
     /* Determine c1 and k */
-    PQCLEAN_ROUND5R5ND_3KEM_5D_r5_cca_kem_encapsulate(c1, k, pk);
+    PQCLEAN_ROUND5R5ND_3KEM_5D_CLEAN_r5_cca_kem_encapsulate(c1, k, pk);
 
     /* Copy c1 into first part of ct */
     memcpy(ct, c1, c1_len);
     *ct_len = c1_len;
 
     /* Apply DEM to get second part of ct */
-    if (PQCLEAN_ROUND5R5ND_3KEM_5D_round5_dem(ct + c1_len, &c2_len, k, m, m_len)) {
+    if (PQCLEAN_ROUND5R5ND_3KEM_5D_CLEAN_round5_dem(ct + c1_len, &c2_len, k, m, m_len)) {
         goto done_encrypt;
     }
     *ct_len += c2_len;
@@ -56,7 +56,7 @@ done_encrypt:
     return result;
 }
 
-int PQCLEAN_ROUND5R5ND_3KEM_5D_r5_cca_pke_decrypt(unsigned char *m, unsigned long long *m_len, const unsigned char *ct, unsigned long long ct_len, const unsigned char *sk) {
+int PQCLEAN_ROUND5R5ND_3KEM_5D_CLEAN_r5_cca_pke_decrypt(unsigned char *m, unsigned long long *m_len, const unsigned char *ct, unsigned long long ct_len, const unsigned char *sk) {
     int result = -1;
     unsigned char k[PARAMS_KAPPA_BYTES];
     const unsigned char *const c1 = ct;
@@ -70,10 +70,10 @@ int PQCLEAN_ROUND5R5ND_3KEM_5D_r5_cca_pke_decrypt(unsigned char *m, unsigned lon
     }
 
     /* Determine k */
-    PQCLEAN_ROUND5R5ND_3KEM_5D_r5_cca_kem_decapsulate(k, c1, sk);
+    PQCLEAN_ROUND5R5ND_3KEM_5D_CLEAN_r5_cca_kem_decapsulate(k, c1, sk);
 
     /* Apply DEM-inverse to get m */
-    if (PQCLEAN_ROUND5R5ND_3KEM_5D_round5_dem_inverse(m, m_len, k, c2, c2_len)) {
+    if (PQCLEAN_ROUND5R5ND_3KEM_5D_CLEAN_round5_dem_inverse(m, m_len, k, c2, c2_len)) {
         goto done_decrypt;
     }
 
